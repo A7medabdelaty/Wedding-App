@@ -27,6 +27,8 @@ class SignUpUserPage extends StatelessWidget {
                       ),
                       const CustomTextFeild(hint: "UserName",secure: false,icon: Icon(Icons.person),),
                       const SizedBox(height: 8,),
+                      const CustomTextFeild(hint: "Phone Number",secure: false,icon: Icon(Icons.phone),),
+                      const SizedBox(height: 8,),
                       const CustomTextFeild(hint: "Email",secure: false,icon: Icon(Icons.email),),
                       const SizedBox(height: 8,),
                       const CustomTextFeild(hint: "Password",secure: true,icon: Icon(Icons.password),),

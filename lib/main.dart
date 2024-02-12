@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/core/utils/assets.dart';
 
-import 'features/splash/presentation/views/splash_page.dart';
 
 void main() {
   runApp(const WeddingApp());

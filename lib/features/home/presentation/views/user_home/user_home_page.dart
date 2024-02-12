@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/custom_app_bar.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_list_view.dart';
+
+import '../../../../../core/utils/assets.dart';
 
 class UserHomePage extends StatelessWidget {
   const UserHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
+    return  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
+        title:  const Text("Wedding" , style: TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            fontFamily: AssetsData.Dancing,
+          color: Colors.white
+
+        ),
+        ),
+        actions:  [
+          IconButton(
+              icon: const Icon(FontAwesomeIcons.circleInfo, color: Colors.white,
+              ),
+            onPressed: (){
+
+            },
+          ),
+          IconButton(
+              icon: const Icon(FontAwesomeIcons.contactCard,color: Colors.white,
+              ),
+            onPressed: (){
+
+            },
+          ),
+        ],
+      ),
+      body: const Column(
         children: [
           CustomAppBar(),
           SizedBox(height: 18,),

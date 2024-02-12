@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wedding/core/utils/assets.dart';
 import 'package:wedding/features/splash/presentation/views/widgets/splash_view_body.dart';
 
 class SplashPage extends StatelessWidget {
