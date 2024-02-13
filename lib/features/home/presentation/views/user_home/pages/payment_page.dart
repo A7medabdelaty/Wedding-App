@@ -27,7 +27,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return Scaffold(
       backgroundColor: Colors.grey.withOpacity(0.7),
       appBar: AppBar(
-        title: Text('Payment Form'),
+        title: const Text('Payment Form'),
         backgroundColor: Colors.orangeAccent,
       ),
       body: Padding(
@@ -116,7 +116,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     },
 
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                     CustomButton(status: "Submit Payment", onPressed: (){
                       if(cardNumber.isNotEmpty && expiryDate.isNotEmpty && name.isNotEmpty && cvv.isNotEmpty){
                         AwesomeDialog(context: context,

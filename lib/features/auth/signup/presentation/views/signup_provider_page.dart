@@ -32,7 +32,7 @@ class SignUpProviderPage extends StatelessWidget {
                             padding: EdgeInsets.all(16.0),
                             child: Text("SignUp" , style: TextStyle(color: Colors.white , fontSize: 24 , fontWeight: FontWeight.bold),),
                           ),
-                           CustomTextFeild(hint: "Provider Name",secure: false,icon: Icon(Icons.person),
+                           CustomTextFeild(hint: "Photographer Name",secure: false,icon: Icon(Icons.person),
                           type: TextInputType.name,
                             validator: (value){
                               if(value==null||value.isEmpty){

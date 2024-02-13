@@ -13,7 +13,7 @@ class ProviderHomePage extends StatelessWidget {
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orangeAccent,
-        title: const Text("Provider Details"),
+        title: const Text("Photorapher Details"),
         actions: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.0),

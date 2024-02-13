@@ -19,7 +19,7 @@ class InputFeilds extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-             CustomTextFeild(hint: "Email",secure: false,icon: Icon(Icons.person),
+             CustomTextFeild(hint: "Email",secure: false,icon: const Icon(Icons.person),
               type: TextInputType.emailAddress,
               validator: (value){
                 if(value==null||value.isEmpty){
@@ -30,7 +30,7 @@ class InputFeilds extends StatelessWidget {
               },
             ),
               const SizedBox(height: 10),
-              CustomTextFeild(hint: "Password",secure: true,icon: Icon(Icons.password),
+              CustomTextFeild(hint: "Password",secure: true,icon: const Icon(Icons.password),
                type: TextInputType.text,
                 validator: (value){
                   if(value==null||value.isEmpty){

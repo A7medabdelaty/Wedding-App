@@ -31,7 +31,7 @@ class AuthorizationPage extends StatelessWidget {
                     const SizedBox(height: 16,),
                      Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: DropDownButtonAuth(list: const ["User","Provider"],
+                      child: DropDownButtonAuth(list: const ["User","Photographer"],
                       onChanged: (value){
                         dropdownValue=value;
                       },
@@ -44,7 +44,7 @@ class AuthorizationPage extends StatelessWidget {
                     CustomButton(status: "Continue",onPressed: (){
                       if ( dropdownValue== 'User') {
                        GoRouter.of(context).push(AppRouter.KSignUpUser);
-                      } else if (dropdownValue == 'Provider') {
+                      } else if (dropdownValue == 'Photographer') {
                         GoRouter.of(context).push(AppRouter.KSignUpProvider);
                       }
                       },),
