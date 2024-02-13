@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wedding/core/common/custom_button.dart';
 import 'package:wedding/core/common/custom_text_feild.dart';
+
+import '../../../../../core/utils/app_router.dart';
 
 class SignUpUserPage extends StatelessWidget {
   const SignUpUserPage({super.key});
@@ -36,7 +39,10 @@ class SignUpUserPage extends StatelessWidget {
                       const CustomTextFeild(hint: "Password Confirm",secure: true,icon: Icon(Icons.password),),
                       const SizedBox(height: 16,),
 
-                      CustomButton(status:"Sign Up" , onPressed: (){}),
+                      CustomButton(status:"Sign Up" , onPressed: (){
+                        GoRouter.of(context).push(AppRouter.KUserHome);
+
+                      }),
                     ],
                   ),
                 ),

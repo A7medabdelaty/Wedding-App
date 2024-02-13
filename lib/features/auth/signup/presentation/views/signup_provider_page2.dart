@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/core/utils/styles.dart';
 import 'package:wedding/features/auth/signup/presentation/views/widgets/custom_drop_down.dart';
 
@@ -70,7 +72,9 @@ class SignUpProviderPage2 extends StatelessWidget {
                           ),
                     
                     
-                          CustomButton(status:"Sign Up" , onPressed: (){}),
+                          CustomButton(status:"Sign Up" , onPressed: (){
+                            GoRouter.of(context).push(AppRouter.KProviderHomePage);
+                          }),
                         ],
                       ),
                     ),
