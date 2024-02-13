@@ -5,14 +5,16 @@ import 'package:wedding/features/auth/signup/presentation/views/signup_provider_
 import 'package:wedding/features/auth/signup/presentation/views/signup_uset_page.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/provider_home_page.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/video_dispaly_page.dart';
-import 'package:wedding/features/home/presentation/views/user_home/payment_page.dart';
-import 'package:wedding/features/home/presentation/views/user_home/user_home_page.dart';
-import 'package:wedding/features/home/presentation/views/user_home/user_to_provider_details_page.dart';
-import 'package:wedding/features/home/presentation/views/user_home/calendar_reservation.dart';
+import 'package:wedding/features/home/presentation/views/user_home/pages/about_us_page.dart';
+import 'package:wedding/features/home/presentation/views/user_home/pages/contact_us_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/maxmize_image.dart';
 
 import '../../features/auth/login/presentation/views/login_page.dart';
 import '../../features/auth/signup/presentation/views/signup_provider_page2.dart';
+import '../../features/home/presentation/views/user_home/pages/calendar_reservation.dart';
+import '../../features/home/presentation/views/user_home/pages/payment_page.dart';
+import '../../features/home/presentation/views/user_home/pages/user_home_page.dart';
+import '../../features/home/presentation/views/user_home/pages/user_to_provider_details_page.dart';
 import '../../features/splash/presentation/views/splash_page.dart';
 
 abstract class AppRouter {
@@ -29,7 +31,8 @@ abstract class AppRouter {
   static const KVideoDisplayPage = "/displayVideoPage";
   static const KReservationPage = "/reservationPage";
   static const KpaymentPage = "/paymentPage";
-
+static const KAboutUs = '/aboutUsPage';
+  static const kContactUs = "/contactUsPage";
 
   static final router = GoRouter(routes: [
     GoRoute(
@@ -89,6 +92,14 @@ abstract class AppRouter {
     GoRoute(
       path: KpaymentPage,
       builder: (context, state) =>  const PaymentPage(),
+    ),
+    GoRoute(
+      path: KAboutUs,
+      builder: (context, state) =>   FAQPage(),
+    ),
+    GoRoute(
+      path: kContactUs,
+      builder: (context, state) =>   ContactUsPage(),
     ),
   ]);
 }
