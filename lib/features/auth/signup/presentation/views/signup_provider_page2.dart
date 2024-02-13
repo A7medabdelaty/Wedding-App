@@ -42,20 +42,22 @@ class SignUpProviderPage2 extends StatelessWidget {
                                 onChanged: (value){
                                 print(value);
                                 },
-                                icon: Icon(Icons.location_on),
+                                icon: const Icon(Icons.location_on),
                               ),
-                              SizedBox(height: 8,),
+                              const SizedBox(height: 8,),
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text("Your address" , style: Styles.kTextStyle18),
                               ),
-                              const CustomTextFeild(hint: "address",secure: false,icon: Icon(Icons.location_city),),
+                              const CustomTextFeild(
+                                hint: "address",secure: false,icon: Icon(Icons.location_city), type: TextInputType.multiline,),
                               const SizedBox(height: 8,),
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text("BirthDate" , style: Styles.kTextStyle18),
                               ),
-                              CustomTextFeild(hint: "mm/dd/yyyy",secure: true,icon: Icon(Icons.date_range),),
+                              const CustomTextFeild(
+                                hint: "mm/dd/yyyy",secure: true,icon: Icon(Icons.date_range),type: TextInputType.datetime,),
                               const SizedBox(height: 8,),
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -65,7 +67,7 @@ class SignUpProviderPage2 extends StatelessWidget {
                                 onChanged: (value){
                                   print(value);
                                 },
-                                icon: Icon(Icons.person_2),
+                                icon: const Icon(Icons.person_2),
                               ),
                               const SizedBox(height: 16,),
                             ],

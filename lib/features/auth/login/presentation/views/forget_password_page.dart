@@ -28,7 +28,9 @@ class ForgetPasswordPage extends StatelessWidget {
                     const SizedBox(height: 16,),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CustomTextFeild(hint: "enter Email", secure: false, icon: Icon(Icons.email)),
+                      child: CustomTextFeild(hint: "enter Email", secure: false, icon: Icon(Icons.email),
+                      type: TextInputType.emailAddress,
+                      ),
 
                     ),
                     const SizedBox(height: 16,),
