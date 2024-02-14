@@ -26,7 +26,7 @@ class AuthorizationPage extends StatelessWidget {
                   children: [
                     const Padding(
                       padding: EdgeInsets.all(16.0),
-                      child: Text("Select user or provider" , style: TextStyle(color: Colors.white , fontSize: 24 , fontWeight: FontWeight.bold),),
+                      child: Text("Select user or photographer" , style: TextStyle(color: Colors.white , fontSize: 24 , fontWeight: FontWeight.bold),),
                     ),
                     const SizedBox(height: 16,),
                      Padding(
@@ -35,7 +35,7 @@ class AuthorizationPage extends StatelessWidget {
                       onChanged: (value){
                         dropdownValue=value;
                       },
-                        icon: Icon(Icons.person),
+                        icon: const Icon(Icons.person),
                       ),
 
                     ),

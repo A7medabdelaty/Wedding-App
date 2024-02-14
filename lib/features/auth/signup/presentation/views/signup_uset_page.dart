@@ -60,7 +60,7 @@ class SignUpUserPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8,),
                            CustomTextFeild(
-                            hint: "Email",secure: false,icon: Icon(Icons.email),
+                            hint: "Email",secure: false,icon: const Icon(Icons.email),
                              type: TextInputType.emailAddress,
                              validator: (value){
                                if(value==null||value.isEmpty){
@@ -71,7 +71,7 @@ class SignUpUserPage extends StatelessWidget {
                              },
                           ),
                           const SizedBox(height: 8,),
-                           CustomTextFeild(hint: "Password",secure: true,icon: Icon(Icons.password),
+                           CustomTextFeild(hint: "Password",secure: true,icon: const Icon(Icons.password),
                             type: TextInputType.text,
                              validator: (value){
                                if(value==null||value.isEmpty){
@@ -83,7 +83,7 @@ class SignUpUserPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8,),
                            CustomTextFeild(
-                            hint: "Password Confirm",secure: true,icon: Icon(Icons.password),
+                            hint: "Password Confirm",secure: true,icon: const Icon(Icons.password),
                             type: TextInputType.text,
                              validator: (value){
                                if(value==null||value.isEmpty){
