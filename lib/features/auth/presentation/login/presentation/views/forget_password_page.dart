@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wedding/core/common/custom_text_feild.dart';
 
-import '../../../../../core/common/custom_button.dart';
+import '../../../../../../core/common/custom_button.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
   const ForgetPasswordPage({super.key});

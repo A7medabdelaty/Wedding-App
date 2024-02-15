@@ -1,16 +1,17 @@
 import 'package:go_router/go_router.dart';
-import 'package:wedding/features/auth/login/presentation/views/forget_password_page.dart';
-import 'package:wedding/features/auth/signup/presentation/views/select_authorization.dart';
-import 'package:wedding/features/auth/signup/presentation/views/signup_provider_page.dart';
-import 'package:wedding/features/auth/signup/presentation/views/signup_uset_page.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/provider_home_page.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/video_dispaly_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/pages/about_us_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/pages/contact_us_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/maxmize_image.dart';
 
-import '../../features/auth/login/presentation/views/login_page.dart';
-import '../../features/auth/signup/presentation/views/signup_provider_page2.dart';
+
+import '../../features/auth/presentation/login/presentation/views/forget_password_page.dart';
+import '../../features/auth/presentation/login/presentation/views/login_page.dart';
+import '../../features/auth/presentation/signup/presentation/views/select_authorization.dart';
+import '../../features/auth/presentation/signup/presentation/views/signup_provider_page.dart';
+import '../../features/auth/presentation/signup/presentation/views/signup_provider_page2.dart';
+import '../../features/auth/presentation/signup/presentation/views/signup_uset_page.dart';
 import '../../features/home/presentation/views/user_home/pages/calendar_reservation.dart';
 import '../../features/home/presentation/views/user_home/pages/payment_page.dart';
 import '../../features/home/presentation/views/user_home/pages/user_home_page.dart';
