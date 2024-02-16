@@ -34,6 +34,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
         'email': email,
         'phoneNumber':phoneNumber,
         'userId':userId,
+        'authorization':"user"
         // Add other fields as needed
       });
       print('User added to Firestore successfully.');

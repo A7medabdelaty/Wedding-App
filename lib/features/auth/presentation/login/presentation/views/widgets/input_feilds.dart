@@ -38,7 +38,7 @@ class InputFeilds extends StatelessWidget {
               return const FormInput();
             } else if (state is AuthenticationSuccess) {
 
-              return Container();
+              return const FormInput();
             } else {
               // Handle other states if needed
               return const FormInput();

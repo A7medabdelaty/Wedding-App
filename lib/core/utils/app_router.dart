@@ -10,9 +10,7 @@ import '../../features/auth/presentation/login/presentation/views/forget_passwor
 import '../../features/auth/presentation/login/presentation/views/login_page.dart';
 import '../../features/auth/presentation/signup/presentation/views/select_authorization.dart';
 import '../../features/auth/presentation/signup/presentation/views/signup_provider_page.dart';
-import '../../features/auth/presentation/signup/presentation/views/signup_provider_page2.dart';
 import '../../features/auth/presentation/signup/presentation/views/signup_uset_page.dart';
-import '../../features/home/presentation/views/user_home/pages/calendar_reservation.dart';
 import '../../features/home/presentation/views/user_home/pages/payment_page.dart';
 import '../../features/home/presentation/views/user_home/pages/user_home_page.dart';
 import '../../features/home/presentation/views/user_home/pages/user_to_provider_details_page.dart';
@@ -30,7 +28,6 @@ abstract class AppRouter {
   static const KMaximizeImage='/maximizeImage';
   static const KProviderHomePage = "/providerHomePage";
   static const KVideoDisplayPage = "/displayVideoPage";
-  static const KReservationPage = "/reservationPage";
   static const KpaymentPage = "/paymentPage";
 static const KAboutUs = '/aboutUsPage';
   static const kContactUs = "/contactUsPage";
@@ -57,10 +54,10 @@ static const KAboutUs = '/aboutUsPage';
       path: KSignUpProvider,
       builder: (context, state) => const SignUpProviderPage(),
     ),
-    GoRoute(
-      path: KSignUpProvider2,
-      builder: (context, state) => const SignUpProviderPage2(),
-    ),
+    // GoRoute(
+    //   path: KSignUpProvider2,
+    //   builder: (context , state)=> SignUpProviderPage2()
+    // ),
     GoRoute(
       path: KForgerPassword,
       builder: (context, state) => const ForgetPasswordPage(),
@@ -86,10 +83,7 @@ static const KAboutUs = '/aboutUsPage';
       path: KVideoDisplayPage,
       builder: (context, state) => const DisplayVideo(),
     ),
-    GoRoute(
-      path: KReservationPage,
-      builder: (context, state) =>  ReservationScreen(),
-    ),
+
     GoRoute(
       path: KpaymentPage,
       builder: (context, state) =>  const PaymentPage(),

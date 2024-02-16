@@ -6,24 +6,22 @@ import 'package:wedding/features/home/presentation/views/provider_home/widgets/v
 import 'package:wedding/features/home/presentation/views/user_home/widgets/images_list_view.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_details.dart';
 
-
-
 class UserToProviderDetailsPage extends StatelessWidget {
-  const UserToProviderDetailsPage({super.key});
-
+  const UserToProviderDetailsPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text("Photographer Details" ),
+        title: const Text("Photographer Details"),
         backgroundColor: Colors.orangeAccent,
-        actions:  [
+        actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: IconButton(icon: const Icon(FontAwesomeIcons.calendarCheck,),
-              onPressed: (){
-              GoRouter.of(context).push(AppRouter.KReservationPage);
+            child: IconButton(
+              icon: const Icon(FontAwesomeIcons.calendarCheck),
+              onPressed: () async {
+                await _selectDateTime(context);
               },
             ),
           ),
@@ -42,18 +40,18 @@ class UserToProviderDetailsPage extends StatelessWidget {
                     //BooksDetailsSection(),
                     ProviderDetails(),
                     Expanded(
-                        child: SizedBox(
-                          height: 40,
-                        )),
+                      child: SizedBox(
+                        height: 40,
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Images" , style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500
-                        ),
-
+                        child: Text(
+                          "Images",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -61,15 +59,14 @@ class UserToProviderDetailsPage extends StatelessWidget {
                     SizedBox(
                       height: 30,
                     ),
-                     Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Videos" , style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500
-                        ),
-
+                        child: Text(
+                          "Videos",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -86,5 +83,37 @@ class UserToProviderDetailsPage extends StatelessWidget {
       ),
     );
   }
-}
 
+  Future<void> _selectDateTime(BuildContext context) async {
+    DateTime selectedDate = DateTime.now();
+    TimeOfDay selectedTime = TimeOfDay.now();
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: selectedTime,
+      );
+
+      if (pickedTime != null) {
+        selectedDate = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        // Now you can use the selectedDate for further processing
+        print('Selected Date and Time: $selectedDate');
+        GoRouter.of(context).push(AppRouter.KpaymentPage);
+      }
+    }
+  }
+}
