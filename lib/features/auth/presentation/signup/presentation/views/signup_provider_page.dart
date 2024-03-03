@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:wedding/core/utils/app_router.dart';
+
 import 'package:wedding/features/auth/presentation/signup/presentation/views/signup_provider_page2.dart';
 
 import '../../../../../../core/common/custom_button.dart';

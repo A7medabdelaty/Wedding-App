@@ -7,7 +7,6 @@ import 'package:wedding/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:wedding/features/auth/manager/auth_cubit/auth_state.dart';
 import 'package:wedding/features/auth/presentation/signup/presentation/views/widgets/form_input_signup_user.dart';
 
-import '../../../../../../core/utils/app_router.dart';
 
 class SignUpUserPage extends StatelessWidget {
   const SignUpUserPage({super.key});
