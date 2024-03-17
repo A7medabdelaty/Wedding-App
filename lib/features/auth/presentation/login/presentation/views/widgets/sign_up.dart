@@ -9,7 +9,7 @@ class SignUp extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Dont have an account? "),
+        const Text("Don't have an account? "),
         TextButton(
             onPressed: () {
               GoRouter.of(context).push(AppRouter.KAuthPath);

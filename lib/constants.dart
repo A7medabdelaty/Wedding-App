@@ -18,5 +18,15 @@ class Constant{
           fontWeight: FontWeight.bold
       )
   );
+  static bool isValidEmail(String email) {
+    // Regular expression for validating an email address
+    // This pattern checks for the basic structure of an email address
+    // It may not catch all possible invalid emails, but it covers most cases
+    // You can use more sophisticated regex patterns for stricter validation
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
+
 
 }

@@ -13,7 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(WeddingApp());
+  runApp(const WeddingApp());
 }
 
 class WeddingApp extends StatelessWidget {

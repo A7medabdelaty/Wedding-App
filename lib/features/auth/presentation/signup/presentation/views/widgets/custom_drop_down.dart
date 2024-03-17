@@ -27,7 +27,7 @@ class _DropDownButtonAuthState extends State<DropDownButtonAuth> {
         ),
 
         value: widget.list.first,
-        icon: Icon(Icons.swipe_down_alt_rounded),
+        icon: const Icon(Icons.swipe_down_alt_rounded),
         elevation: 16,
         style: const TextStyle(color: Colors.black),
 

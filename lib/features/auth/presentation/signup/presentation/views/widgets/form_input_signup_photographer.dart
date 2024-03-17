@@ -1,23 +1,19 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../../../core/common/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:wedding/constants.dart';
+
+import '../../../../../../../constants.dart';
+import '../../../../../../../core/common/custom_button.dart';
 import '../../../../../../../core/common/custom_text_feild.dart';
-import '../../../../../manager/auth_cubit/auth_cubit.dart';
+import '../signup_provider_page2.dart';
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-class FormInputSignup extends StatefulWidget {
-  const FormInputSignup({super.key});
+class SignUpPhotographerForm extends StatefulWidget {
+  const SignUpPhotographerForm({super.key});
 
   @override
-  State<FormInputSignup> createState() => _FormInputSignupState();
+  State<SignUpPhotographerForm> createState() => _SignUpPhotographerFormState();
 }
 
-class _FormInputSignupState extends State<FormInputSignup> {
+class _SignUpPhotographerFormState extends State<SignUpPhotographerForm> {
 
   String email = '';
   String password = '';
@@ -25,56 +21,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
   String phoneNumber='';
   String confirmPassword='';
 
-  Future<void> addUserToFirestore(String name, String email , String phoneNumber,String userId) async {
-    try {
-      await FirebaseFirestore.instance.collection('users').add({
-        'name': name,
-        'email': email,
-        'phoneNumber':phoneNumber,
-        'userId':userId,
-        'authorization':"user"
-        // Add other fields as needed
-      });
-      print('User added to Firestore successfully.');
-    } catch (e) {
-      print('Error adding user to Firestore: $e');
-    }
-  }
-  void navigate(BuildContext context){
-    _signUp(context);
-  }
-  void _signUp(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {
-      if (confirmPassword == password ) {
-        try {
-          // Create user in Firebase Authentication
-          User? user = await context.read<AuthenticationCubit>().signUpWithEmailAndPassword(email, password);
 
-          if (user != null) {
-            // Use the user's ID to store additional information in Firestore
-            final userId = user.uid;
-            addUserToFirestore(name, email, phoneNumber, userId);
-
-            // Navigate to the home page after successful signup
-
-          }
-
-
-        } catch (e) {
-          print('Error during signup: $e');
-          // Handle signup errors here
-        }
-      } else {
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          title: "Wrong password",
-          desc: "Password and Confirm password are different",
-          btnCancelOnPress: () {},
-        ).show();
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,44 +43,42 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       child: Text("SignUp" , style: TextStyle(color: Colors.white , fontSize: 24 , fontWeight: FontWeight.bold),),
                     ),
                     CustomTextFeild(
-                      hint: "UserName",secure: false,icon: const Icon(Icons.person),
+
+                      hint: "Photographer Name",
+                      secure: false,
+                      icon: Icon(Icons.person),
                       type: TextInputType.name,
                       validator: (value){
                         if(value==null||value.isEmpty){
-                          return "user name is required";
+                          return "Name is required";
                         }else{
-                          name=value;
+                          name = value;
                           return null;
                         }
                       },
-
                     ),
                     const SizedBox(height: 8,),
-                    CustomTextFeild(
-                      hint: "Phone Number",
-                      secure: false,icon: Icon(Icons.phone), type: TextInputType.phone,
+                    CustomTextFeild(hint: "Phone Number",secure: false,icon: Icon(Icons.phone),
+                      type: TextInputType.phone,
                       validator: (value){
                         if(value==null||value.isEmpty){
-                          return "phone number is required";
+                          return "phone is required";
                         }else{
                           phoneNumber=value;
                           return null;
                         }
                       },
-
-
                     ),
                     const SizedBox(height: 8,),
-                    CustomTextFeild(
-                      hint: "Email",secure: false,icon: const Icon(Icons.email),
+                    CustomTextFeild(hint: "Email",secure: false,icon: Icon(Icons.email),
                       type: TextInputType.emailAddress,
                       validator: (value){
                         if(value==null||value.isEmpty){
                           return "Email is required";
-                        }else if(!Constant.isValidEmail(value)){
+                        }
+                        else if(!Constant.isValidEmail(value)){
                           return "Invalid Email";
                         }
-
                         else{
                           email=value;
                           return null;
@@ -141,13 +86,15 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       },
                     ),
                     const SizedBox(height: 8,),
-                    CustomTextFeild(hint: "Password",secure: true,icon: const Icon(Icons.password),
+                    CustomTextFeild(hint: "Password",secure: true,icon: Icon(Icons.password),
                       type: TextInputType.text,
                       validator: (value){
                         if(value==null||value.isEmpty){
                           return "password is required";
+
+
                         }else if(value.length<6){
-                          return "Password must be more than 6 characters";
+                          return "password must be greater than 6 characters";
                         }
 
                         else{
@@ -157,12 +104,11 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       },
                     ),
                     const SizedBox(height: 8,),
-                    CustomTextFeild(
-                      hint: "Password Confirm",secure: true,icon: const Icon(Icons.password),
+                    CustomTextFeild(hint: "Password Confirm",secure: true,icon: Icon(Icons.password),
                       type: TextInputType.text,
                       validator: (value){
                         if(value==null||value.isEmpty){
-                          return "confirm password is required";
+                          return "Password confirm is required";
                         }else{
                           confirmPassword=value;
                           return null;
@@ -171,8 +117,24 @@ class _FormInputSignupState extends State<FormInputSignup> {
                     ),
                     const SizedBox(height: 16,),
 
-                    CustomButton(status:"Sign Up" , onPressed: (){
-                      navigate(context);
+                    CustomButton(status:"Continue" , onPressed: (){
+                      if (_formKey.currentState!.validate()) {
+                        if(confirmPassword==password){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpProviderPage2(
+                                name: name,
+                                phoneNumber: phoneNumber,
+                                email: email,
+                                password:password,
+                              ),
+                            ),
+                          );
+                        }
+                        // Navigate to the ProfilePage and pass the data
+
+                      }
 
                     }),
                   ],

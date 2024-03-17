@@ -6,6 +6,7 @@ import 'package:wedding/core/common/custom_text_feild.dart';
 import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/features/auth/manager/auth_cubit/auth_state.dart';
 
+import '../../../../../../constants.dart';
 import '../../../../../../core/common/custom_button.dart';
 import '../../../../manager/auth_cubit/auth_cubit.dart';
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -101,7 +102,11 @@ class _ForgetFormState extends State<ForgetForm> {
                     validator: (value){
                     if(value==null ||value.isEmpty){
                       return "Email is required";
-                    }else{
+                    }
+                    else if(!Constant.isValidEmail(value)){
+                      return "Invalid Email";
+                    }
+                    else{
                       email=value;
                       return null;
                     }

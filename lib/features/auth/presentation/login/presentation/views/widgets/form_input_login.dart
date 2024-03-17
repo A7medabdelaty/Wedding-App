@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../../../../../../constants.dart';
 import '../../../../../../../core/common/custom_button.dart';
 import '../../../../../../../core/common/custom_text_feild.dart';
-import '../../../../../../../core/utils/app_router.dart';
 import '../../../../../manager/auth_cubit/auth_cubit.dart';
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -25,9 +24,9 @@ class _FormInputState extends State<FormInput> {
         email,
         password,
       );
-      GoRouter.of(context).pushReplacement(AppRouter.KUserHome);
-    }
 
+
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,11 @@ class _FormInputState extends State<FormInput> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Email is required";
-              } else {
+              }
+              else if(!Constant.isValidEmail(value)){
+                return "Invalid Email";
+              }
+              else {
                 email = value;
                 return null;
               }
@@ -59,7 +62,11 @@ class _FormInputState extends State<FormInput> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Password is required";
-              } else {
+              }else if(value.length<6){
+                return "Password is wrong";
+              }
+
+              else {
                 password = value;
                 return null;
               }

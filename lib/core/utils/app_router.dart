@@ -10,7 +10,7 @@ import '../../features/auth/presentation/login/presentation/views/forget_passwor
 import '../../features/auth/presentation/login/presentation/views/login_page.dart';
 import '../../features/auth/presentation/signup/presentation/views/select_authorization.dart';
 import '../../features/auth/presentation/signup/presentation/views/signup_provider_page.dart';
-import '../../features/auth/presentation/signup/presentation/views/signup_uset_page.dart';
+import '../../features/auth/presentation/signup/presentation/views/signup_user_page.dart';
 import '../../features/home/presentation/views/user_home/pages/payment_page.dart';
 import '../../features/home/presentation/views/user_home/pages/user_home_page.dart';
 import '../../features/home/presentation/views/user_home/pages/user_to_provider_details_page.dart';
