@@ -7,6 +7,7 @@ import '../../../../../../../core/common/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:wedding/constants.dart';
 import '../../../../../../../core/common/custom_text_feild.dart';
+import '../../../../../data/profile.dart';
 import '../../../../../manager/auth_cubit/auth_cubit.dart';
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -26,15 +27,16 @@ class _FormInputSignupState extends State<FormInputSignup> {
   String confirmPassword='';
 
   Future<void> addUserToFirestore(String name, String email , String phoneNumber,String userId) async {
+    Profile profile = Profile(name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        profileId: userId,
+        authorization: "user");
+    Map<String, dynamic> profileMap = profile.toMap();
     try {
-      await FirebaseFirestore.instance.collection('users').add({
-        'name': name,
-        'email': email,
-        'phoneNumber':phoneNumber,
-        'userId':userId,
-        'authorization':"user"
-        // Add other fields as needed
-      });
+      await FirebaseFirestore.instance.collection('users').doc(userId).set(
+          profileMap
+         );
       print('User added to Firestore successfully.');
     } catch (e) {
       print('Error adding user to Firestore: $e');
@@ -111,7 +113,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
                     const SizedBox(height: 8,),
                     CustomTextFeild(
                       hint: "Phone Number",
-                      secure: false,icon: Icon(Icons.phone), type: TextInputType.phone,
+                      secure: false,icon: const Icon(Icons.phone), type: TextInputType.phone,
                       validator: (value){
                         if(value==null||value.isEmpty){
                           return "phone number is required";

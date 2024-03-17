@@ -35,7 +35,7 @@ class InputFeilds extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Text("Warning"),
+                    title:  Text(state.error),
                     content: const Text("Invalid email or password"),
                     actions: [
                       TextButton(

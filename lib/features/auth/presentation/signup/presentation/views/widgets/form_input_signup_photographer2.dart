@@ -111,7 +111,7 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
     Profile profile = Profile(name: name,
         email: email,
         phoneNumber: phoneNumber,
-        photographerId: photographerId,
+        profileId: photographerId,
         gender: gender,
         governorate: gover,
         birthDate: date,

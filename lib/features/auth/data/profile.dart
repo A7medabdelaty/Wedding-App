@@ -3,7 +3,7 @@ class Profile{
   String? password;
   String ?phoneNumber;
   String ?email;
-  String ?photographerId;
+  String ?profileId;
   String ? gender;
   String ?address;
   String ?governorate;
@@ -18,7 +18,7 @@ class Profile{
       this.password,
       this.phoneNumber,
       this.email,
-      this.photographerId,
+      this.profileId,
       this.gender,
       this.address,
       this.governorate,
@@ -30,7 +30,7 @@ class Profile{
       'name': name,
       'phoneNumber': phoneNumber,
       'email': email,
-      'photographerId': photographerId,
+      'photographerId': profileId,
       'gender': gender,
       'address': address,
       'governorate': governorate,

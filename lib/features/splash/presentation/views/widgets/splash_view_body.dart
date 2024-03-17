@@ -1,9 +1,14 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedding/features/splash/presentation/views/widgets/sliding_txt.dart';
 
 import '../../../../../core/utils/app_router.dart';
+import '../../../../auth/manager/auth_cubit/auth_cubit.dart';
+import '../../../../auth/manager/auth_cubit/auth_state.dart';
 
 class SplashBodyView extends StatefulWidget {
   const SplashBodyView({super.key});
@@ -20,9 +25,10 @@ class _SplashBodyViewState extends State<SplashBodyView>
   @override
   void initState() {
     super.initState();
-
+    _checkAuthentication();
     initSlidingAnimation();
     navigateToHome();
+
   }
 
   @override
@@ -75,5 +81,31 @@ class _SplashBodyViewState extends State<SplashBodyView>
 
       // Get.to(() => const HomeView(),transition: Transition.rightToLeft,duration: kTransitionDuration);
     });
+  }
+
+
+  void _checkAuthentication() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // User is signed in
+      final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      if (snapshot.exists) {
+        // User data exists in Firestore
+        final String authorization = snapshot.data()!['authorization'];
+        if (authorization == 'photographer') {
+          // Navigate to photographer home page
+          context.read<AuthenticationCubit>().emit(AuthenticationSuccessPhotographer(user));
+        } else {
+          // Navigate to user home page
+          context.read<AuthenticationCubit>().emit(AuthenticationSuccessUser(user));
+        }
+      } else {
+        // User data does not exist in Firestore
+        context.read<AuthenticationCubit>().emit(const AuthenticationFailure(error: 'User data not found'));
+      }
+    } else {
+      // User is not signed in
+      GoRouter.of(context).go(AppRouter.KLoginPage);
+    }
   }
 }
