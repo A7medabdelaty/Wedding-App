@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wedding/core/common/custom_button.dart';
+import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/widgets/videos_list_view.dart';
 
 import '../user_home/widgets/images_list_view.dart';
@@ -12,17 +15,23 @@ class ProviderHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.orangeAccent,
         title: const Text("Photographer Details"),
-        actions: const [
-          Padding(
+        actions:  [
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.0),
             child: Icon(Icons.edit),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Icon(Icons.home_repair_service),
           ),
+
+          IconButton(onPressed: (){
+            FirebaseAuth.instance.signOut();
+            GoRouter.of(context).pushReplacement(AppRouter.KLoginPage);
+          }, icon: const Icon(Icons.logout )),
         ],
       ),
       backgroundColor: Colors.white.withOpacity(0.7),

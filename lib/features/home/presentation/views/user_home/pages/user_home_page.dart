@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ class UserHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.orangeAccent,
         title:  const Text("Wedding" , style: TextStyle(
             fontSize: 40,
@@ -39,6 +41,10 @@ class UserHomePage extends StatelessWidget {
                 GoRouter.of(context).push(AppRouter.kContactUs);
             },
           ),
+          IconButton(onPressed: (){
+            FirebaseAuth.instance.signOut();
+            GoRouter.of(context).pushReplacement(AppRouter.KLoginPage);
+          }, icon: const Icon(Icons.logout, color: Colors.white,)),
         ],
       ),
       body: const Column(
