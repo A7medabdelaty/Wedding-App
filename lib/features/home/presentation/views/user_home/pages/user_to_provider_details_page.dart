@@ -38,7 +38,7 @@ class UserToProviderDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     //BooksDetailsSection(),
-                    ProviderDetails(),
+                   // ProviderDetails(),
                     Expanded(
                       child: SizedBox(
                         height: 40,

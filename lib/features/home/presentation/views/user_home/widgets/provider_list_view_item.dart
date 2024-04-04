@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedding/core/utils/app_router.dart';
@@ -5,8 +6,8 @@ import 'package:wedding/core/utils/app_router.dart';
 import '../../../../../../core/utils/assets.dart';
 
 class ProviderListViewItem extends StatelessWidget {
-  const ProviderListViewItem({super.key});
-
+  const ProviderListViewItem({super.key, required this.imageUrl, required this.name, required this.gover});
+  final String imageUrl,name,gover;
   @override
   Widget build(BuildContext context) {
     return   GestureDetector(
@@ -23,20 +24,18 @@ class ProviderListViewItem extends StatelessWidget {
           height: 125,
           child: Row(
             children: [
-              AspectRatio(
-                aspectRatio: 3.1 / 4,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    image:  DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(AssetsData.photographerImage
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+          ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: AspectRatio(
+              aspectRatio: 3.1 / 4,
+              child:CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: imageUrl,
+                errorWidget:(context,url,error)=> const Icon(Icons.error , color: Colors.red,),
+              )
+
+          ),
+        ),
               const SizedBox(
                 width: 30,
               ),
@@ -46,11 +45,11 @@ class ProviderListViewItem extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width * .5,
-                      child: const Text(
-                          "Ahmed Mohamed",
+                      child:  Text(
+                          name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 25
                           )
                       ),
@@ -58,9 +57,9 @@ class ProviderListViewItem extends StatelessWidget {
                     const SizedBox(
                       height: 3,
                     ),
-                    const Text(
-                      "Cairo",
-                      style: TextStyle(
+                     Text(
+                      gover,
+                      style: const TextStyle(
                           fontSize: 20
                       ),
                     ),

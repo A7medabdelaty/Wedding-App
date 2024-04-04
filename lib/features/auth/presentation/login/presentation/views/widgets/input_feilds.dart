@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:wedding/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:wedding/features/auth/manager/auth_cubit/auth_state.dart';
+import 'package:wedding/features/home/manager/PhotographersFetchCubit.dart';
 
 import '../../../../../../../core/utils/app_router.dart';
+import '../../../../../../home/manager/DataFetchCubit.dart';
 import 'form_input_login.dart';
 
 
@@ -22,9 +25,13 @@ class InputFeilds extends StatelessWidget {
         child: BlocConsumer<AuthenticationCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthenticationSuccessPhotographer) {
+              context.read<DataFetchingCubit>().fetchDataPhotographer(state.user!.uid);
 
               GoRouter.of(context).pushReplacement(AppRouter.KProviderHomePage);
             } else if(state is AuthenticationSuccessUser){
+              context.read<DataFetchingPhotographersCubit>().fetchData(state.user!.uid);
+
+              context.read<DataFetchingCubit>().fetchDataUser(state.user!.uid);
               GoRouter.of(context).pushReplacement(AppRouter.KUserHome);
 
             }

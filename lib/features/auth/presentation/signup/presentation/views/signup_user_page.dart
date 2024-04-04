@@ -9,6 +9,7 @@ import 'package:wedding/features/auth/manager/auth_cubit/auth_state.dart';
 import 'package:wedding/features/auth/presentation/signup/presentation/views/widgets/form_input_signup_user.dart';
 
 import '../../../../../../core/utils/app_router.dart';
+import '../../../../../home/manager/DataFetchCubit.dart';
 
 
 class SignUpUserPage extends StatelessWidget {
@@ -23,6 +24,8 @@ class SignUpUserPage extends StatelessWidget {
           child: BlocConsumer<AuthenticationCubit,AuthState>(
             listener:(context,state){
               if(state is AuthenticationSuccess){
+                context.read<DataFetchingCubit>().fetchDataUser(state.user!.uid);
+
                 GoRouter.of(context).pushReplacement(AppRouter.KUserHome);
 
               }else if(state is AuthenticationFailure){
@@ -42,7 +45,7 @@ class SignUpUserPage extends StatelessWidget {
               }
             }, builder: (BuildContext context, AuthState state) {
               if(state is AuthenticationLoading){
-                return Center(child: CircularProgressIndicator(),);
+                return const Center(child: CircularProgressIndicator(),);
               }else{
                 return const FormInputSignup();
               }

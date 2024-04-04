@@ -35,6 +35,7 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
   String governement = "";
   String gender = "";
   String date = "";
+  String price="";
 
   DateTime selectedDate = DateTime.now();
   String? selectedImagePath;
@@ -107,7 +108,7 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
 
   Future<void> addUserToFirestore(String name, String email, String phoneNumber,
       String photographerId, String gover, String address, String date,
-      String gender, String imageUrl) async {
+      String gender, String imageUrl ,String price) async {
     Profile profile = Profile(name: name,
         email: email,
         phoneNumber: phoneNumber,
@@ -117,7 +118,9 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
         birthDate: date,
         profilePic: imageUrl,
         address: address,
-        authorization: "photographer");
+        authorization: "photographer",
+      price: price
+    );
     Map<String, dynamic> profileMap = profile.toMap();
 
     try {
@@ -157,7 +160,10 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                 address,
                 dateController.text,
                 gender,
-                _imageUrl);
+                _imageUrl,
+                price
+
+            );
 
             // Navigate to the home page after successful signup
 
@@ -346,6 +352,23 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                           icon: const Icon(Icons.person_2),
                         ),
                         const SizedBox(height: 16,),
+                        CustomTextFeild(
+                          hint: "Price"
+                          ,
+                          secure: false
+                          ,
+                          icon: const Icon(Icons.currency_pound_outlined)
+                          ,
+                          type: TextInputType.multiline,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "price is required";
+                            } else {
+                              price = value;
+                              return null;
+                            }
+                          },
+                        ),
                       ],
                     ),
 

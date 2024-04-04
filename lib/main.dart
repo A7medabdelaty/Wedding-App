@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/core/utils/assets.dart';
 import 'package:wedding/features/auth/manager/auth_cubit/auth_cubit.dart';
+import 'package:wedding/features/home/manager/DataFetchCubit.dart';
+import 'package:wedding/features/home/manager/PhotographersFetchCubit.dart';
 
 import 'firebase_options.dart';
 
@@ -27,6 +29,10 @@ class WeddingApp extends StatelessWidget {
         create: (context)=>AuthenticationCubit(),
         ),
 
+        BlocProvider(create: (context)=>DataFetchingCubit(),
+        ),
+        BlocProvider(create: (context)=>DataFetchingPhotographersCubit(),
+        )
       ],
       child: DecoratedBox(
         decoration:  BoxDecoration(

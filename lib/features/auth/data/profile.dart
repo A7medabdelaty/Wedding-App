@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Profile{
   String ?name;
   String? password;
@@ -10,6 +12,7 @@ class Profile{
   String ?birthDate;
   String ?profilePic;
   String?authorization;
+  String?price;
 
 
 
@@ -24,6 +27,7 @@ class Profile{
       this.governorate,
       this.birthDate,
       this.profilePic,
+    this.price,
       this.authorization});
   Map<String, dynamic> toMap() {
     return {
@@ -37,7 +41,27 @@ class Profile{
       'birthDate': birthDate,
       'profilePic': profilePic,
       'authorization': authorization,
+      'price':price
     };
+  }
+
+
+  factory Profile.fromFirestore(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return Profile(
+      name: data['name'],
+      password: data['password'],
+      phoneNumber: data['phoneNumber'],
+      email: data['email'],
+      profileId: data['photographerId'],
+      gender: data['gender'],
+      address: data['address'],
+      governorate: data['governorate'],
+      birthDate: data['birthDate'],
+      profilePic: data['profilePic'],
+      authorization: data['authorization'],
+      price: data['price']
+    );
   }
 
 }

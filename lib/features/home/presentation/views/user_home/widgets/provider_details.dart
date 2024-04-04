@@ -4,24 +4,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'custom_provider_image.dart';
 
 class ProviderDetails extends StatelessWidget {
-  const ProviderDetails({super.key});
+  const ProviderDetails({super.key, required this.name, required this.gover, required this.address, required this.phone, required this.price, required this.imageUrl});
+  final String name,gover,address,phone,price,imageUrl;
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-
     return Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * .2, vertical: 16),
-          child: const CustomProviderImage(),
+          child:  CustomProviderImage(imageUrl: imageUrl,),
         ),
         const SizedBox(
           height: 40,
         ),
-        const Text(
-          "Ahmed Mohamed",
-          style: TextStyle(
+         Text(
+          name,
+          style: const TextStyle(
               fontSize: 30,
             fontWeight: FontWeight.bold
           ),
@@ -30,25 +30,25 @@ class ProviderDetails extends StatelessWidget {
           height: 6,
         ),
 
-        const Row(
+         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.location_on),
-            SizedBox(width: 3,),
+            const Icon(Icons.location_on),
+            const SizedBox(width: 3,),
             Text(
-              "Cairo",
-              style:TextStyle(
+              gover,
+              style:const TextStyle(
                   fontSize: 20,
                 fontWeight: FontWeight.w600
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
 
             Text(
-              "Nasr City",
-              style:TextStyle(
+              address,
+              style:const TextStyle(
                   fontSize: 20,
                 fontWeight: FontWeight.w600
               ),
@@ -56,14 +56,14 @@ class ProviderDetails extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8,),
-        const Row(
+          Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.phone),
-            SizedBox(width:8,),
+            const Icon(Icons.phone),
+            const SizedBox(width:8,),
             Text(
-              "01115897979",
-              style:TextStyle(
+              phone,
+              style:const TextStyle(
                   fontSize: 20,
                 fontWeight: FontWeight.w600
               ),
@@ -71,14 +71,14 @@ class ProviderDetails extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8,),
-        const Row(
+         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(FontAwesomeIcons.poundSign),
-            SizedBox(width:8,),
+            const Icon(FontAwesomeIcons.poundSign),
+            const SizedBox(width:8,),
             Text(
-              "150",
-              style:TextStyle(
+              price,
+              style:const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600
               ),
