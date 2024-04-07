@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:wedding/features/auth/data/profile.dart';
 
 import 'custom_provider_image.dart';
 
 class ProviderDetails extends StatelessWidget {
-  const ProviderDetails({super.key, required this.name, required this.gover, required this.address, required this.phone, required this.price, required this.imageUrl});
-  final String name,gover,address,phone,price,imageUrl;
+  const ProviderDetails({super.key, required this.profile, });
+  final Profile profile;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,13 @@ class ProviderDetails extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * .2, vertical: 16),
-          child:  CustomProviderImage(imageUrl: imageUrl,),
+          child:  CustomProviderImage(imageUrl: profile.profilePic!,),
         ),
         const SizedBox(
           height: 40,
         ),
          Text(
-          name,
+          profile.name!,
           style: const TextStyle(
               fontSize: 30,
             fontWeight: FontWeight.bold
@@ -36,7 +37,7 @@ class ProviderDetails extends StatelessWidget {
             const Icon(Icons.location_on),
             const SizedBox(width: 3,),
             Text(
-              gover,
+              profile.governorate!,
               style:const TextStyle(
                   fontSize: 20,
                 fontWeight: FontWeight.w600
@@ -47,7 +48,7 @@ class ProviderDetails extends StatelessWidget {
             ),
 
             Text(
-              address,
+              profile.address!,
               style:const TextStyle(
                   fontSize: 20,
                 fontWeight: FontWeight.w600
@@ -62,7 +63,7 @@ class ProviderDetails extends StatelessWidget {
             const Icon(Icons.phone),
             const SizedBox(width:8,),
             Text(
-              phone,
+              profile.phoneNumber!,
               style:const TextStyle(
                   fontSize: 20,
                 fontWeight: FontWeight.w600
@@ -77,7 +78,7 @@ class ProviderDetails extends StatelessWidget {
             const Icon(FontAwesomeIcons.poundSign),
             const SizedBox(width:8,),
             Text(
-              price,
+              profile.price!,
               style:const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600

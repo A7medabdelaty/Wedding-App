@@ -67,10 +67,10 @@ static const KAboutUs = '/aboutUsPage';
       path: KUserHome,
       builder: (context, state) => const UserHomePage(),
     ),
-    GoRoute(
-      path: KProviderDetailsPage,
-      builder: (context, state) => const UserToProviderDetailsPage(),
-    ),
+    // GoRoute(
+    //   path: KProviderDetailsPage,
+    //   builder: (context, state) => const UserToProviderDetailsPage(),
+    // ),
     GoRoute(
       path: KMaximizeImage,
       builder: (context, state) => const MaxmizeImage(),

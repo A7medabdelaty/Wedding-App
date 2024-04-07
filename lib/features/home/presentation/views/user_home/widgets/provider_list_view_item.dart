@@ -2,18 +2,27 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedding/core/utils/app_router.dart';
+import 'package:wedding/features/auth/data/profile.dart';
+import 'package:wedding/features/home/presentation/views/user_home/pages/user_to_provider_details_page.dart';
+import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_details.dart';
 
 import '../../../../../../core/utils/assets.dart';
 
 class ProviderListViewItem extends StatelessWidget {
-  const ProviderListViewItem({super.key, required this.imageUrl, required this.name, required this.gover});
-  final String imageUrl,name,gover;
+  const ProviderListViewItem({super.key, required this.profile, });
+  final Profile profile;
   @override
   Widget build(BuildContext context) {
     return   GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.KProviderDetailsPage);
-      },
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserToProviderDetailsPage(
+            profile: profile,
+            ),
+          ),
+        );      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -30,7 +39,7 @@ class ProviderListViewItem extends StatelessWidget {
               aspectRatio: 3.1 / 4,
               child:CachedNetworkImage(
                 fit: BoxFit.fill,
-                imageUrl: imageUrl,
+                imageUrl: profile.profilePic!,
                 errorWidget:(context,url,error)=> const Icon(Icons.error , color: Colors.red,),
               )
 
@@ -46,7 +55,7 @@ class ProviderListViewItem extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * .5,
                       child:  Text(
-                          name,
+                          profile.name!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -57,16 +66,27 @@ class ProviderListViewItem extends StatelessWidget {
                     const SizedBox(
                       height: 3,
                     ),
-                     Text(
-                      gover,
-                      style: const TextStyle(
-                          fontSize: 20
-                      ),
-                    ),
+                     Row(
+                       children: [
+                         const Icon(Icons.location_on),
+                         Text(
+                          profile.governorate!,
+                          style: const TextStyle(
+                              fontSize: 20
+                          ),
+                                             ),
+                       ],
+                     ),
                     const SizedBox(
                       height: 3,
                     ),
 
+                    Row(
+                      children: [
+                        const Icon(Icons.currency_pound),
+                        Text(profile.price! , style: const TextStyle(fontSize: 20),)
+                      ],
+                    )
                   ],
                 ),
               ),

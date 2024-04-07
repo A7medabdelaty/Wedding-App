@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,13 +6,35 @@ import 'package:wedding/core/common/custom_button.dart';
 import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/features/auth/data/profile.dart';
 import 'package:wedding/features/home/manager/DataFetchCubit.dart';
+import 'package:wedding/features/home/presentation/views/provider_home/edit_page.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/widgets/videos_list_view.dart';
 
+import '../../services/firebase_service.dart';
+import '../../services/image_picker_services.dart';
 import '../user_home/widgets/images_list_view.dart';
 import '../user_home/widgets/provider_details.dart';
 
-class ProviderHomePage extends StatelessWidget {
+class ProviderHomePage extends StatefulWidget {
   const ProviderHomePage({super.key});
+
+
+  @override
+  State<ProviderHomePage> createState() => _ProviderHomePageState();
+}
+
+class _ProviderHomePageState extends State<ProviderHomePage> {
+  List<String> _images = [];
+  bool _uploading = false;
+
+  void _selectImages() async {
+    List<String> selectedImages = await ImagePickerService.pickImages();
+    if (selectedImages != null) {
+      setState(() {
+        _images.addAll(selectedImages);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +44,9 @@ class ProviderHomePage extends StatelessWidget {
         backgroundColor: Colors.orangeAccent,
         title: const Text("Photographer Details"),
         actions:  [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.0),
-            child: Icon(Icons.edit),
-          ),
+          IconButton(icon: const Icon(Icons.edit) , onPressed: (){
+
+          },),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Icon(Icons.home_repair_service),
@@ -51,13 +71,7 @@ class ProviderHomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
                         children: [
-                          //BooksDetailsSection(),
-                           ProviderDetails(name: '${profile.name}',
-                           gover: '${profile.governorate}',
-                             address: '${profile.address}',
-                             phone: '${profile.phoneNumber}',
-                             price: "${profile.price}",
-                             imageUrl: '${profile.profilePic}',
+                           ProviderDetails(profile: profile,
 
                            ),
                           Padding(
@@ -65,13 +79,27 @@ class ProviderHomePage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomButton(status: "Upload Images", onPressed: (){
+                                CustomButton(status: "Select Images", onPressed: (){
+                                  _selectImages();
                                 }),
-                                CustomButton(status: "Upload Videos", onPressed: (){
+                                CustomButton(status: "Select Videos", onPressed: (){
                                 }),
                               ],
                             ),
                           ),
+                          CustomButton(status: _uploading ? 'Uploading...' : 'Upload', onPressed: () async{
+                            setState(() {
+                              _uploading = true;
+                            });
+                            await FirebaseService.uploadImages(_images, profile);
+                            setState(() {
+                              _images.clear();
+                              _uploading = false;
+                            });
+                          },
+
+                          ),
+                          if (_uploading) const LinearProgressIndicator(),
 
                           const Expanded(
                               child: SizedBox(

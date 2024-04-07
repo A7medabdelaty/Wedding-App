@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wedding/features/auth/data/profile.dart';
@@ -15,6 +14,7 @@ class ProviderListView extends StatelessWidget {
         builder:(context,profiles){
           if(profiles.isNotEmpty){
             return Container(
+
               margin: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -27,16 +27,14 @@ class ProviderListView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return  Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      child: ProviderListViewItem(imageUrl: profiles[index].profilePic!,
-                        name: profiles[index].name!,
-                        gover: profiles[index].governorate!,
+                      child: ProviderListViewItem(profile: profiles[index],
 
                       ),
                     );
                   }),
             );
           }else{
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
         }
     );
