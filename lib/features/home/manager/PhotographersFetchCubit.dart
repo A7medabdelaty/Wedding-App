@@ -5,7 +5,7 @@ import 'package:wedding/features/auth/data/profile.dart';
 class DataFetchingPhotographersCubit extends Cubit<List<Profile>> {
   DataFetchingPhotographersCubit() : super([]);
 
-  void fetchData(String userId) async {
+  void fetchData() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('photographers').get();
       List<Profile> profiles = querySnapshot.docs.map((doc) => Profile.fromFirestore(doc)).toList();

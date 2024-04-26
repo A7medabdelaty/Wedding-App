@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wedding/core/common/custom_text_feild.dart';
 import 'package:wedding/features/auth/data/profile.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -14,14 +15,21 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  TextEditingController _address = TextEditingController();
+  TextEditingController _price = TextEditingController();
+
+  String name = "",
+      phone = "",
+      address = "",
+      price = "";
 
   @override
   void initState() {
     super.initState();
     _nameController.text = widget.profile.name ?? '';
     _phoneNumberController.text = widget.profile.phoneNumber ?? '';
-    _emailController.text = widget.profile.email ?? '';
+    _address.text = widget.profile.address ?? '';
+    _price.text = widget.profile.price ?? '';
   }
 
   @override
@@ -35,17 +43,46 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+            CustomTextFeild(hint: "Name",
+              secure: false,
+              icon: const Icon(Icons.person),
+              type: TextInputType.name,
+              validator: (value) {
+                name = value!;
+                return null;
+              },
             ),
-            TextFormField(
-              controller: _phoneNumberController,
-              decoration: const InputDecoration(labelText: 'Phone Number'),
+            const SizedBox(),
+            CustomTextFeild(hint: "PhoneNumber",
+              secure: false,
+              icon: const Icon(Icons.phone),
+              type: TextInputType.phone,
+              validator: (value) {
+                phone = value!;
+                return null;
+              },
             ),
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+            const SizedBox(),
+            CustomTextFeild(
+              hint: "Address",
+              secure: false,
+              icon: const Icon(Icons.location_city),
+              type: TextInputType.text,
+              validator: (value) {
+                address = value!;
+                return null;
+              },
+            ),
+            const SizedBox(),
+            CustomTextFeild(
+              hint: "price",
+              secure: false,
+              icon: const Icon(Icons.price_change),
+              type: TextInputType.phone,
+              validator: (value) {
+                price = value!;
+                return null;
+              },
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -62,18 +99,46 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   Future<void> _updateProfile() async {
     try {
-      await FirebaseFirestore.instance.collection('photographers').doc(widget.profile.profileId).update({
-        'name': _nameController.text,
-        'phoneNumber': _phoneNumberController.text,
-        'email': _emailController.text,
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile updated successfully'),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      String newName = _nameController.text.trim();
+      String newPhone = _phoneNumberController.text.trim();
+      String newAddress = _address.text.trim();
+      String newPrice = _price.text.trim();
+
+      // Update only if the field is not empty and its value is different from the current profile value
+      Map<String, dynamic> updateData = {};
+      if (newName.isNotEmpty && newName != widget.profile.name) {
+        updateData['name'] = newName;
+      }
+      if (newPhone.isNotEmpty && newPhone != widget.profile.phoneNumber) {
+        updateData['phoneNumber'] = newPhone;
+      }
+      if (newAddress.isNotEmpty && newAddress != widget.profile.address) {
+        updateData['address'] = newAddress;
+      }
+      if (newPrice.isNotEmpty && newPrice != widget.profile.price) {
+        updateData['price'] = newPrice;
+      }
+
+      // Perform the update if there's any change
+      if (updateData.isNotEmpty) {
+        await FirebaseFirestore.instance.collection('photographers').doc(
+            widget.profile.profileId).update(updateData);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Profile updated successfully'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No changes detected'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     } catch (error) {
+      print(error);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Failed to update profile'),

@@ -11,9 +11,6 @@ import '../../features/auth/presentation/login/presentation/views/login_page.dar
 import '../../features/auth/presentation/signup/presentation/views/select_authorization.dart';
 import '../../features/auth/presentation/signup/presentation/views/signup_provider_page.dart';
 import '../../features/auth/presentation/signup/presentation/views/signup_user_page.dart';
-import '../../features/home/presentation/views/user_home/pages/payment_page.dart';
-import '../../features/home/presentation/views/user_home/pages/user_home_page.dart';
-import '../../features/home/presentation/views/user_home/pages/user_to_provider_details_page.dart';
 import '../../features/splash/presentation/views/splash_page.dart';
 
 abstract class AppRouter {
@@ -28,7 +25,6 @@ abstract class AppRouter {
   static const KMaximizeImage='/maximizeImage';
   static const KProviderHomePage = "/providerHomePage";
   static const KVideoDisplayPage = "/displayVideoPage";
-  static const KpaymentPage = "/paymentPage";
 static const KAboutUs = '/aboutUsPage';
   static const kContactUs = "/contactUsPage";
 
@@ -63,10 +59,10 @@ static const KAboutUs = '/aboutUsPage';
       builder: (context, state) => const ForgetPasswordPage(),
     ),
 
-    GoRoute(
-      path: KUserHome,
-      builder: (context, state) => const UserHomePage(),
-    ),
+    // GoRoute(
+    //   path: KUserHome,
+    //   builder: (context, state) => const UserHomePage(),
+    // ),
     // GoRoute(
     //   path: KProviderDetailsPage,
     //   builder: (context, state) => const UserToProviderDetailsPage(),
@@ -84,10 +80,10 @@ static const KAboutUs = '/aboutUsPage';
       builder: (context, state) => const DisplayVideo(),
     ),
 
-    GoRoute(
-      path: KpaymentPage,
-      builder: (context, state) =>  const PaymentPage(),
-    ),
+    // GoRoute(
+    //   path: KpaymentPage,
+    //   builder: (context, state) =>  const PaymentPage(),
+    // ),
     GoRoute(
       path: KAboutUs,
       builder: (context, state) =>   FAQPage(),

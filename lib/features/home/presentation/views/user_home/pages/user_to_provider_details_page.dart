@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/features/auth/data/profile.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/widgets/videos_list_view.dart';
+import 'package:wedding/features/home/presentation/views/user_home/pages/payment_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/images_list_view.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_details.dart';
 
+import '../../../../manager/image_fetch_cubit.dart';
+
 class UserToProviderDetailsPage extends StatelessWidget {
-  const UserToProviderDetailsPage({Key? key, required this.profile});
-final  Profile profile;
+  const UserToProviderDetailsPage({Key? key, required this.photographerData, required this.userData});
+final  Profile photographerData;
+final Profile userData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +42,7 @@ final  Profile profile;
                 child: Column(
                   children: [
                     //BooksDetailsSection(),
-                    ProviderDetails(profile: profile,),
+                    ProviderDetails(profile: photographerData,),
                     const Expanded(
                       child: SizedBox(
                         height: 40,
@@ -56,7 +59,11 @@ final  Profile profile;
                         ),
                       ),
                     ),
-                    const ImageListView(),
+
+                    BlocProvider(
+                      create: (context) => ImageVideoCubit()..fetchImageURLs(photographerData!.profileId!),
+                      child: ImageListView(profileId: photographerData!.profileId!),
+                    ),
                     const SizedBox(
                       height: 30,
                     ),
@@ -71,7 +78,10 @@ final  Profile profile;
                         ),
                       ),
                     ),
-                    const VideoListView(),
+                    BlocProvider(
+                      create: (context) => ImageVideoCubit()..fetchVideosUrls(photographerData!.profileId!),
+                      child: VideoListView(profileId: photographerData!.profileId!),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -113,7 +123,9 @@ final  Profile profile;
 
         // Now you can use the selectedDate for further processing
         print('Selected Date and Time: $selectedDate');
-        GoRouter.of(context).push(AppRouter.KpaymentPage);
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return PaymentPage(userProfile: userData, photographerProfile:photographerData , date: selectedDate, time: selectedTime);
+        }));
       }
     }
   }

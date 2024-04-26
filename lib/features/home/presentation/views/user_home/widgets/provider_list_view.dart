@@ -6,8 +6,8 @@ import 'package:wedding/features/home/manager/PhotographersFetchCubit.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_list_view_item.dart';
 
 class ProviderListView extends StatelessWidget {
-  const ProviderListView({super.key});
-
+  const ProviderListView({super.key, required this.userData});
+  final Profile userData;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DataFetchingPhotographersCubit,List<Profile>>(
@@ -28,7 +28,7 @@ class ProviderListView extends StatelessWidget {
                     return  Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: ProviderListViewItem(profile: profiles[index],
-
+                        userData: userData,
                       ),
                     );
                   }),

@@ -2,14 +2,14 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:wedding/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:wedding/features/auth/manager/auth_cubit/auth_state.dart';
 import 'package:wedding/features/auth/presentation/signup/presentation/views/widgets/form_input_signup_user.dart';
 
-import '../../../../../../core/utils/app_router.dart';
 import '../../../../../home/manager/DataFetchCubit.dart';
+import '../../../../../home/manager/PhotographersFetchCubit.dart';
+import '../../../../../home/presentation/views/user_home/pages/user_home_page.dart';
 
 
 class SignUpUserPage extends StatelessWidget {
@@ -24,10 +24,12 @@ class SignUpUserPage extends StatelessWidget {
           child: BlocConsumer<AuthenticationCubit,AuthState>(
             listener:(context,state){
               if(state is AuthenticationSuccess){
+                context.read<DataFetchingPhotographersCubit>().fetchData();
                 context.read<DataFetchingCubit>().fetchDataUser(state.user!.uid);
 
-                GoRouter.of(context).pushReplacement(AppRouter.KUserHome);
-
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return UserHomePage(userId:state.user!.uid );
+                }));
               }else if(state is AuthenticationFailure){
                 Future.delayed(Duration.zero,(){
                   AwesomeDialog(

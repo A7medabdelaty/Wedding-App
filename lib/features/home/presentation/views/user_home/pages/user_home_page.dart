@@ -1,16 +1,35 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wedding/features/auth/data/profile.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/custom_app_bar.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_list_view.dart';
 
 import '../../../../../../core/utils/app_router.dart';
 import '../../../../../../core/utils/assets.dart';
+import '../../../../manager/DataFetchCubit.dart';
 
 
-class UserHomePage extends StatelessWidget {
-  const UserHomePage({super.key});
+class UserHomePage extends StatefulWidget {
+  const UserHomePage({super.key, required this.userId});
+  final String userId;
+
+  @override
+  State<UserHomePage> createState() => _UserHomePageState();
+
+}
+
+
+class _UserHomePageState extends State<UserHomePage> {
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    //context.read<DataFetchingCubit>().fetchDataUser(widget.userId);
+
+  }
+  Profile ?profile;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +66,28 @@ class UserHomePage extends StatelessWidget {
           }, icon: const Icon(Icons.logout, color: Colors.white,)),
         ],
       ),
-      body: const Column(
-        children: [
-          CustomAppBar(),
-          SizedBox(height: 18,),
-          Expanded(
-              child: ProviderListView(),
-          ),
-        ],
-      ),
+      body: BlocBuilder<DataFetchingCubit,Profile?>(
+          builder: (context, fetchProfile) {
+            if (fetchProfile != null) {
+              return Column(
+                children: [
+                  const CustomAppBar(),
+                  const SizedBox(height: 18,),
+                  Expanded(
+                    child: ProviderListView(userData: fetchProfile),
+                  ),
+                ],
+              );
+            } else {
+              // Handle the case when fetchProfile is null
+              return const Center(
+                child: CircularProgressIndicator(), // Or any other loading indicator
+              );
+            }
+          }
+      )
+
+
     );
   }
 }

@@ -1,16 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:wedding/core/utils/app_router.dart';
 import 'package:wedding/features/auth/data/profile.dart';
 import 'package:wedding/features/home/presentation/views/user_home/pages/user_to_provider_details_page.dart';
-import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_details.dart';
 
-import '../../../../../../core/utils/assets.dart';
 
 class ProviderListViewItem extends StatelessWidget {
-  const ProviderListViewItem({super.key, required this.profile, });
+  const ProviderListViewItem({super.key, required this.profile, required this.userData, });
   final Profile profile;
+  final Profile userData;
   @override
   Widget build(BuildContext context) {
     return   GestureDetector(
@@ -19,7 +16,8 @@ class ProviderListViewItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => UserToProviderDetailsPage(
-            profile: profile,
+            photographerData: profile,
+              userData: userData,
             ),
           ),
         );      },

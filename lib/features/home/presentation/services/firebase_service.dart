@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wedding/features/auth/data/profile.dart';
@@ -22,4 +21,20 @@ class FirebaseService {
       });
     }
   }
+  static Future<void> uploadVideos(List<String> videoPaths, Profile profile) async {
+    final storage = FirebaseStorage.instance;
+    final firestore = FirebaseFirestore.instance;
+
+    for (var path in videoPaths) {
+      String videoName = DateTime.now().millisecondsSinceEpoch.toString();
+      final Reference ref = storage.ref("photographersVideos").child('${profile.name}').child('$videoName.mp4');
+      final UploadTask uploadTask = ref.putFile(File(path));
+
+      await uploadTask.whenComplete(() async {
+        String url = await ref.getDownloadURL();
+        await firestore.collection('photographers').doc(profile.profileId).collection("videos").add({'url': url});
+      });
+    }
+  }
+
 }
