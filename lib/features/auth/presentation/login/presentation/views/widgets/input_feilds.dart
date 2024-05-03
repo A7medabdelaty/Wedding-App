@@ -31,23 +31,49 @@ class InputFeilds extends StatelessWidget {
               context.read<ImageVideoCubit>().fetchVideosUrls(state.user!.uid);
 
               GoRouter.of(context).pushReplacement(AppRouter.KProviderHomePage);
-            } else if(state is AuthenticationSuccessUser){
+            } else if (state is AuthenticationSuccessUser) {
               context.read<DataFetchingPhotographersCubit>().fetchData();
               context.read<DataFetchingCubit>().fetchDataUser(state.user!.uid);
 
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return UserHomePage(userId:state.user!.uid );
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return UserHomePage(userId: state.user!.uid);
               }));
-
-            }
-
-            else if (state is AuthenticationFailure) {
+            } else if (state is AuthEmailNotVerified) {
+              // Show error dialog for unverified email
+              showDialog(
+                context: context,
+                barrierDismissible: false, // Prevent dismissing the dialog
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Email Not Verified'),
+                    content: const Text('Please verify your email to proceed.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          // Resend email verification
+                          context.read<AuthenticationCubit>().sendEmailVerification();
+                        },
+                        child: const Text('Resend Verification Email'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          // Resend email verification
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (state is AuthenticationFailure) {
               // Show error dialog for authentication failure
               showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title:  Text(state.error),
+                    title: Text(state.error),
                     content: const Text("Invalid email or password"),
                     actions: [
                       TextButton(
@@ -63,9 +89,9 @@ class InputFeilds extends StatelessWidget {
             }
           },
           builder: (BuildContext context, AuthState state) {
-            if(state is AuthenticationLoading){
-              return const Center(child: CircularProgressIndicator(),);
-            }else{
+            if (state is AuthenticationLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
               return const FormInput();
             }
           },

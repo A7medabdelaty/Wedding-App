@@ -1,9 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/provider_home_page.dart';
-import 'package:wedding/features/home/presentation/views/provider_home/video_dispaly_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/pages/about_us_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/pages/contact_us_page.dart';
-import 'package:wedding/features/home/presentation/views/user_home/widgets/maxmize_image.dart';
 
 
 import '../../features/auth/presentation/login/presentation/views/forget_password_page.dart';
@@ -67,18 +65,18 @@ static const KAboutUs = '/aboutUsPage';
     //   path: KProviderDetailsPage,
     //   builder: (context, state) => const UserToProviderDetailsPage(),
     // ),
-    GoRoute(
-      path: KMaximizeImage,
-      builder: (context, state) => const MaxmizeImage(),
-    ),
+    // GoRoute(
+    //   path: KMaximizeImage,
+    //   builder: (context, state) => const MaxmizeImage(),
+    // ),
     GoRoute(
       path: KProviderHomePage,
       builder: (context, state) => const ProviderHomePage(),
     ),
-    GoRoute(
-      path: KVideoDisplayPage,
-      builder: (context, state) => const DisplayVideo(),
-    ),
+    // GoRoute(
+    //   path: KVideoDisplayPage,
+    //   builder: (context, state) => const DisplayVideo(),
+    // ),
 
     // GoRoute(
     //   path: KpaymentPage,

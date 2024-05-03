@@ -8,6 +8,7 @@ import 'package:wedding/features/auth/data/profile.dart';
 import 'package:wedding/features/home/manager/DataFetchCubit.dart';
 import 'package:wedding/features/home/presentation/services/video_picker_services.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/edit_page.dart';
+import 'package:wedding/features/home/presentation/views/provider_home/photographer_reservations_page.dart';
 import 'package:wedding/features/home/presentation/views/provider_home/widgets/videos_list_view.dart';
 import '../../../manager/image_fetch_cubit.dart';
 import '../../services/firebase_service.dart';
@@ -83,10 +84,15 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
               }));
             },
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Icon(Icons.home_repair_service),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return PhotographerReservationPage(profile: profile!,);
+              }));
+            },
+            icon: const Icon(Icons.card_travel),
           ),
+
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();

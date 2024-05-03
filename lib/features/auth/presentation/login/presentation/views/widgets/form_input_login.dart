@@ -5,7 +5,7 @@ import '../../../../../../../constants.dart';
 import '../../../../../../../core/common/custom_button.dart';
 import '../../../../../../../core/common/custom_text_feild.dart';
 import '../../../../../manager/auth_cubit/auth_cubit.dart';
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<FormState> _formKeyLogin = GlobalKey<FormState>();
 
 class FormInput extends StatefulWidget {
   const FormInput({super.key});
@@ -19,7 +19,7 @@ class _FormInputState extends State<FormInput> {
   String password = '';
 
   void _login(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
+    if (_formKeyLogin.currentState!.validate()) {
       context.read<AuthenticationCubit>().signInWithEmailAndPassword(
         email,
         password,
@@ -31,7 +31,7 @@ class _FormInputState extends State<FormInput> {
   @override
   Widget build(BuildContext context) {
     return  Form(
-      key: _formKey,
+      key: _formKeyLogin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

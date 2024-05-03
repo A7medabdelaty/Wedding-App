@@ -18,7 +18,7 @@ class VideoListView extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: CustomVideoView(),
+                child: CustomVideoView(url: state[index],),
               );
             },
           );

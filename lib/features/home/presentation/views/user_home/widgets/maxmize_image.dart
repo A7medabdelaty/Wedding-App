@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedding/core/utils/assets.dart';
 class MaxmizeImage extends StatelessWidget {
-  const MaxmizeImage({super.key});
-
+  const MaxmizeImage({super.key, required this.url});
+  final String url;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +16,10 @@ class MaxmizeImage extends StatelessWidget {
         child: Hero(
           tag: AssetImage(AssetsData.testImage),
           child: Center(
-            child: Image.asset(
-              AssetsData.testImage,
-              fit: BoxFit.contain,
-            ),
+            child:CachedNetworkImage(imageUrl: url,
+              fit: BoxFit.fill,
+              errorWidget:(context,url,error)=> const Icon(Icons.error , color: Colors.red,),
+            )
           ),
         ),
       ),

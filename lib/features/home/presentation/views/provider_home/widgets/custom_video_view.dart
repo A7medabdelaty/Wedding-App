@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:wedding/features/home/presentation/views/provider_home/video_dispaly_page.dart';
 
-import '../../../../../../core/utils/app_router.dart';
 import '../../../../../../core/utils/assets.dart';
 
 
 class CustomVideoView extends StatelessWidget {
+final String url;
 
+  const CustomVideoView({super.key, required this.url});
   @override
   Widget build(BuildContext context) {
     return   GestureDetector(
       onTap: (){
-        GoRouter.of(context).push(AppRouter.KVideoDisplayPage);
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return DisplayVideo(url: url,);
+        }));
+
       },
       child: SizedBox(
         child: AspectRatio(

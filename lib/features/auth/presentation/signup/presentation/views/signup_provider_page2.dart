@@ -9,8 +9,6 @@ import 'package:wedding/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:wedding/features/auth/manager/auth_cubit/auth_state.dart';
 import 'package:wedding/features/auth/presentation/signup/presentation/views/widgets/form_input_signup_photographer2.dart';
 
-import '../../../../../home/manager/DataFetchCubit.dart';
-import '../../../../../home/manager/image_fetch_cubit.dart';
 
 
 class SignUpProviderPage2 extends StatelessWidget {
@@ -33,10 +31,10 @@ class SignUpProviderPage2 extends StatelessWidget {
               child: BlocConsumer<AuthenticationCubit,AuthState>(
                 listener: (context,state){
                   if(state is AuthenticationSuccess){
-                    GoRouter.of(context).pushReplacement(AppRouter.KProviderHomePage);
-                    context.read<DataFetchingCubit>().fetchDataPhotographer(state.user!.uid);
-                    context.read<ImageVideoCubit>().fetchImageURLs(state.user!.uid);
-                    context.read<ImageVideoCubit>().fetchVideosUrls(state.user!.uid);
+                    GoRouter.of(context).pushReplacement(AppRouter.KLoginPage);
+                    // context.read<DataFetchingCubit>().fetchDataPhotographer(state.user!.uid);
+                    // context.read<ImageVideoCubit>().fetchImageURLs(state.user!.uid);
+                    // context.read<ImageVideoCubit>().fetchVideosUrls(state.user!.uid);
 
                   }else if(state is AuthenticationFailure){
                     Future.delayed(Duration.zero,(){

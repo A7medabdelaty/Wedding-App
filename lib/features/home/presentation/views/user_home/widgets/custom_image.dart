@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:wedding/core/utils/app_router.dart';
+import 'package:wedding/features/home/presentation/views/user_home/widgets/maxmize_image.dart';
 
 
 
@@ -12,7 +11,9 @@ class CustomImagesWedding extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        GoRouter.of(context).push(AppRouter.KMaximizeImage);
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return MaxmizeImage(url: url,);
+        }));
       },
       child: SizedBox(
         child: ClipRRect(

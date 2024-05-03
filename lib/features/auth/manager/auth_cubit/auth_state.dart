@@ -37,3 +37,11 @@ class AuthenticationFailure extends AuthState {
   @override
   List<Object?> get props => [error];
 }
+class AuthEmailNotVerified extends AuthState {
+  final User? user;
+
+  const AuthEmailNotVerified(this.user);
+
+  @override
+  List<Object?> get props => [user];
+}

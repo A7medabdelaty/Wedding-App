@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class DisplayVideo extends StatefulWidget {
-  const DisplayVideo({super.key});
+  const DisplayVideo({super.key, required this.url});
+  final String url;
 
   @override
   State<DisplayVideo> createState() => _DisplayVideoState();
@@ -16,7 +17,12 @@ class _DisplayVideoState extends State<DisplayVideo> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/images/video.mp4')
+
+    // Create a Uri object from the URL string
+    Uri videoUri = Uri.parse(widget.url);
+
+    // Initialize VideoPlayerController with the Uri object
+    _controller = VideoPlayerController.network(videoUri.toString())
       ..initialize().then((_) {
         setState(() {});
       });

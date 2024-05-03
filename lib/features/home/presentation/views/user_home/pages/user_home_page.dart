@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedding/features/auth/data/profile.dart';
+import 'package:wedding/features/home/presentation/views/user_home/pages/user_profile_page.dart';
+import 'package:wedding/features/home/presentation/views/user_home/pages/user_reservations_page.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/custom_app_bar.dart';
 import 'package:wedding/features/home/presentation/views/user_home/widgets/provider_list_view.dart';
 
@@ -16,6 +18,7 @@ class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key, required this.userId});
   final String userId;
 
+
   @override
   State<UserHomePage> createState() => _UserHomePageState();
 
@@ -23,14 +26,9 @@ class UserHomePage extends StatefulWidget {
 
 
 class _UserHomePageState extends State<UserHomePage> {
-  @override
-  void setState(VoidCallback fn) {
-    // TODO: implement setState
-    //context.read<DataFetchingCubit>().fetchDataUser(widget.userId);
 
-  }
   Profile ?profile;
-
+  String? searchQuery;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -46,6 +44,11 @@ class _UserHomePageState extends State<UserHomePage> {
         ),
         ),
         actions:  [
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return UserProfilePage(profile: profile!,);
+            }));
+          }, icon: const Icon(Icons.person, color: Colors.white,)),
           IconButton(
               icon: const Icon(FontAwesomeIcons.circleInfo, color: Colors.white,
               ),
@@ -61,6 +64,11 @@ class _UserHomePageState extends State<UserHomePage> {
             },
           ),
           IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return UserResrvationPage(profile: profile!,);
+            }));
+          }, icon: const Icon(Icons.card_travel, color: Colors.white,)),
+          IconButton(onPressed: (){
             FirebaseAuth.instance.signOut();
             GoRouter.of(context).pushReplacement(AppRouter.KLoginPage);
           }, icon: const Icon(Icons.logout, color: Colors.white,)),
@@ -68,13 +76,20 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
       body: BlocBuilder<DataFetchingCubit,Profile?>(
           builder: (context, fetchProfile) {
+            profile=fetchProfile;
             if (fetchProfile != null) {
               return Column(
                 children: [
-                  const CustomAppBar(),
+                  CustomAppBar(
+                    onSearch: (query) {
+                      setState(() {
+                        searchQuery = query;
+                      });
+                    },
+                  ),
                   const SizedBox(height: 18,),
                   Expanded(
-                    child: ProviderListView(userData: fetchProfile),
+                    child: ProviderListView(userData: fetchProfile,searchQuery: searchQuery,),
                   ),
                 ],
               );
