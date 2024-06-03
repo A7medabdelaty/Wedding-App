@@ -12,9 +12,9 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -26,14 +26,23 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   Future<void> _updateProfile() async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(widget.profile.profileId).update({
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'phone': _phoneController.text,
-      });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully')));
+      widget.profile.phoneNumber = _phoneController.text;
+      widget.profile.name = _nameController.text;
+      widget.profile.email = _emailController.text;
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.profile.profileId)
+          .update(
+            widget.profile.toMap(),
+          );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Profile updated successfully'),
+        ),
+      );
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to update profile')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to update profile')));
     }
   }
 
@@ -55,60 +64,55 @@ class _UserProfilePageState extends State<UserProfilePage> {
               children: [
                 TextFormField(
                   controller: _nameController,
-
                   decoration: InputDecoration(
                       errorStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500
-                      ),
+                          color: Colors.white, fontWeight: FontWeight.w500),
                       hintText: "Name",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-
-
                       ),
                       fillColor: Colors.white70,
                       filled: true,
-                      prefixIcon:Icon(Icons.person)
-                  ),
+                      prefixIcon: const Icon(Icons.person)),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Container(
                   color: Colors.amber,
                   child: ListTile(
                     leading: const Icon(Icons.email),
-                    title: Center(child: Text(_emailController.text ?? '')),
+                    title: Center(
+                      child: Text(_emailController.text),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 10,),
-
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   controller: _phoneController,
                   decoration: InputDecoration(
                       errorStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500
-                      ),
+                          color: Colors.white, fontWeight: FontWeight.w500),
                       hintText: "Phone",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-
-
                       ),
                       fillColor: Colors.white70,
                       filled: true,
-                      prefixIcon:Icon(Icons.phone)
-                  ),
+                      prefixIcon: const Icon(Icons.phone)),
                 ),
-                SizedBox(height: 20),
-                CustomButton(status: "Update Profile", onPressed: ()=>_updateProfile)
-
+                const SizedBox(height: 20),
+                CustomButton(
+                  status: "Update Profile",
+                  onPressed: () => _updateProfile(),
+                ),
               ],
             ),
           ),
         ),
       ),
-
     );
   }
 

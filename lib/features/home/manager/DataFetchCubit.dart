@@ -8,7 +8,10 @@ class DataFetchingCubit extends Cubit<Profile?> {
 
   void fetchDataPhotographer(String photographerId) async {
     try {
-      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance.collection('photographers').doc(photographerId).get();
+      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+          .collection('photographers')
+          .doc(photographerId)
+          .get();
       if (docSnapshot.exists) {
         Profile profile = Profile.fromFirestore(docSnapshot);
         emit(profile);
@@ -19,9 +22,13 @@ class DataFetchingCubit extends Cubit<Profile?> {
       print(e);
     }
   }
+
   void fetchDataUser(String userId) async {
     try {
-      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
       if (docSnapshot.exists) {
         Profile profile = Profile.fromFirestore(docSnapshot);
         emit(profile);
