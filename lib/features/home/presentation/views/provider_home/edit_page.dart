@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wedding/core/common/custom_text_feild.dart';
 import 'package:wedding/features/auth/data/profile.dart';
+import 'package:wedding/features/home/manager/DataFetchCubit.dart';
 
 class EditProfilePage extends StatefulWidget {
   final Profile profile;
+  final DataFetchingCubit cubit;
 
-  const EditProfilePage({Key? key, required this.profile}) : super(key: key);
+  const EditProfilePage(
+      {super.key, required this.profile, required this.cubit});
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _address = TextEditingController();
-  TextEditingController _price = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _address = TextEditingController();
+  final TextEditingController _price = TextEditingController();
 
-  String name = "",
-      phone = "",
-      address = "",
-      price = "";
+  String name = "", phone = "", address = "", price = "";
 
   @override
   void initState() {
@@ -43,7 +42,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTextFeild(hint: "Name",
+            CustomTextField(
+              controller: _nameController,
+              hint: "Name",
               secure: false,
               icon: const Icon(Icons.person),
               type: TextInputType.name,
@@ -53,7 +54,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               },
             ),
             const SizedBox(),
-            CustomTextFeild(hint: "PhoneNumber",
+            CustomTextField(
+              controller: _phoneNumberController,
+              hint: "PhoneNumber",
               secure: false,
               icon: const Icon(Icons.phone),
               type: TextInputType.phone,
@@ -63,7 +66,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               },
             ),
             const SizedBox(),
-            CustomTextFeild(
+            CustomTextField(
+              controller: _address,
               hint: "Address",
               secure: false,
               icon: const Icon(Icons.location_city),
@@ -74,7 +78,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               },
             ),
             const SizedBox(),
-            CustomTextFeild(
+            CustomTextField(
+              controller: _price,
               hint: "price",
               secure: false,
               icon: const Icon(Icons.price_change),
@@ -87,7 +92,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                _updateProfile();
+                widget.cubit.updateProfile(
+                  widget.profile,
+                  _nameController.text.trim(),
+                  _phoneNumberController.text.trim(),
+                  _address.text.trim(),
+                  _price.text.trim(),
+                  context,
+                );
               },
               child: const Text('Update Profile'),
             ),
@@ -97,54 +109,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Future<void> _updateProfile() async {
-    try {
-      String newName = _nameController.text.trim();
-      String newPhone = _phoneNumberController.text.trim();
-      String newAddress = _address.text.trim();
-      String newPrice = _price.text.trim();
-
-      // Update only if the field is not empty and its value is different from the current profile value
-      Map<String, dynamic> updateData = {};
-      if (newName.isNotEmpty && newName != widget.profile.name) {
-        updateData['name'] = newName;
-      }
-      if (newPhone.isNotEmpty && newPhone != widget.profile.phoneNumber) {
-        updateData['phoneNumber'] = newPhone;
-      }
-      if (newAddress.isNotEmpty && newAddress != widget.profile.address) {
-        updateData['address'] = newAddress;
-      }
-      if (newPrice.isNotEmpty && newPrice != widget.profile.price) {
-        updateData['price'] = newPrice;
-      }
-
-      // Perform the update if there's any change
-      if (updateData.isNotEmpty) {
-        await FirebaseFirestore.instance.collection('photographers').doc(
-            widget.profile.profileId).update(updateData);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Profile updated successfully'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No changes detected'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (error) {
-      print(error);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to update profile'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
+// Future<void> _updateProfile() async {
+//   try {
+//     widget.profile.name = _nameController.text.trim();
+//     widget.profile.phoneNumber = _phoneNumberController.text.trim();
+//     widget.profile.address = _address.text.trim();
+//     widget.profile.price = _price.text.trim();
+//
+//     await FirebaseFirestore.instance
+//         .collection('photographers')
+//         .doc(widget.profile.profileId)
+//         .update(widget.profile.toMap())
+//         .then(
+//       (value) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(
+//             content: Text('Profile updated successfully'),
+//             duration: Duration(seconds: 2),
+//           ),
+//         );
+//       },
+//     );
+//   } catch (error) {
+//     print(error);
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       const SnackBar(
+//         content: Text('Failed to update profile'),
+//         duration: Duration(seconds: 2),
+//       ),
+//     );
+//   }
+// }
 }

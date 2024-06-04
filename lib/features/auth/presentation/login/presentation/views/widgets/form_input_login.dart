@@ -35,7 +35,7 @@ class _FormInputState extends State<FormInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          CustomTextFeild(
+          CustomTextField(
             hint: "Email",
             secure: false,
             icon: const Icon(Icons.person),
@@ -54,7 +54,7 @@ class _FormInputState extends State<FormInput> {
             },
           ),
           const SizedBox(height: 10),
-          CustomTextFeild(
+          CustomTextField(
             hint: "Password",
             secure: true,
             icon: const Icon(Icons.password),

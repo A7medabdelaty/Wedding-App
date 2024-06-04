@@ -43,7 +43,7 @@ class _SignUpPhotographerFormState extends State<SignUpPhotographerForm> {
                         style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Photographer Name",
                       secure: false,
                       icon: Icon(Icons.person),
@@ -58,7 +58,7 @@ class _SignUpPhotographerFormState extends State<SignUpPhotographerForm> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Phone Number",
                       secure: false,
                       icon: Icon(Icons.phone),
@@ -79,7 +79,7 @@ class _SignUpPhotographerFormState extends State<SignUpPhotographerForm> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Email",
                       secure: false,
                       icon: Icon(Icons.email),
@@ -96,7 +96,7 @@ class _SignUpPhotographerFormState extends State<SignUpPhotographerForm> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Password",
                       secure: true,
                       icon: Icon(Icons.password),
@@ -115,7 +115,7 @@ class _SignUpPhotographerFormState extends State<SignUpPhotographerForm> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Confirm Password",
                       secure: true,
                       icon: Icon(Icons.password),

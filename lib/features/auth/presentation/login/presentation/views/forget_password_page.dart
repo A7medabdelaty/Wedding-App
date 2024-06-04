@@ -97,7 +97,7 @@ class _ForgetFormState extends State<ForgetForm> {
                 const SizedBox(height: 16,),
                  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: CustomTextFeild(hint: "enter Email", secure: false, icon: const Icon(Icons.email),
+                  child: CustomTextField(hint: "enter Email", secure: false, icon: const Icon(Icons.email),
                     type: TextInputType.emailAddress,
                     validator: (value){
                     if(value==null ||value.isEmpty){

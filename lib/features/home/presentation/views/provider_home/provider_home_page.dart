@@ -76,7 +76,8 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context){
-                return EditProfilePage(profile: profile!,);
+                DataFetchingCubit cubit = BlocProvider.of<DataFetchingCubit>(context);
+                return EditProfilePage(profile: profile!, cubit: cubit,);
               }));
             },
           ),

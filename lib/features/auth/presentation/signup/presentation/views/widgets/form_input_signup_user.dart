@@ -107,7 +107,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Username",
                       secure: false,
                       icon: const Icon(Icons.person),
@@ -122,7 +122,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Phone Number",
                       secure: false,
                       icon: const Icon(Icons.phone),
@@ -141,7 +141,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Email",
                       secure: false,
                       icon: const Icon(Icons.email),
@@ -158,7 +158,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Password",
                       secure: true,
                       icon: const Icon(Icons.password),
@@ -178,7 +178,7 @@ class _FormInputSignupState extends State<FormInputSignup> {
                       },
                     ),
                     const SizedBox(height: 8),
-                    CustomTextFeild(
+                    CustomTextField(
                       hint: "Confirm Password",
                       secure: true,
                       icon: const Icon(Icons.password),

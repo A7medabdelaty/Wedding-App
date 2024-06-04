@@ -16,18 +16,28 @@ import '../../../../../../../core/utils/styles.dart';
 import '../../../../../data/profile.dart';
 import '../../../../../manager/auth_cubit/auth_cubit.dart';
 import 'custom_drop_down.dart';
+
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class SignUpPhotographerForm2 extends StatefulWidget {
-  SignUpPhotographerForm2({super.key, required this.email, required this.password, required this.name, required this.phoneNumber});
-  final String email ;
-  final String password ;
+  SignUpPhotographerForm2(
+      {super.key,
+      required this.email,
+      required this.password,
+      required this.name,
+      required this.phoneNumber});
+
+  final String email;
+
+  final String password;
+
   final String name;
   final String phoneNumber;
   late String imageUrl;
 
   @override
-  State<SignUpPhotographerForm2> createState() => _SignUpPhotographerForm2State();
+  State<SignUpPhotographerForm2> createState() =>
+      _SignUpPhotographerForm2State();
 }
 
 class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
@@ -35,18 +45,19 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
   String governement = "";
   String gender = "";
   String date = "";
-  String price="";
+  String price = "";
 
   DateTime selectedDate = DateTime.now();
   String? selectedImagePath;
   final TextEditingController dateController = TextEditingController(
-      text: "mm/dd/yyyy");
+    text: "mm/dd/yyyy",
+  );
   File? _image;
   String _imageUrl = "";
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() async {
@@ -66,22 +77,19 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
     }
 
     try {
-      String fileExtension = _image!
-          .path
-          .split('.')
-          .last;
+      String fileExtension = _image!.path.split('.').last;
       String fileName = '${widget.name}.$fileExtension';
 
-      Reference storageReference = FirebaseStorage.instance.ref('profilePics/')
-          .child(fileName);
+      Reference storageReference =
+          FirebaseStorage.instance.ref('profilePics/').child(fileName);
       UploadTask uploadTask = storageReference.putFile(_image!);
 
       Completer<String> completer = Completer<String>();
 
       uploadTask.snapshotEvents.listen(
-            (TaskSnapshot snapshot) {
-          print('Upload progress: ${snapshot.bytesTransferred}/${snapshot
-              .totalBytes}');
+        (TaskSnapshot snapshot) {
+          print(
+              'Upload progress: ${snapshot.bytesTransferred}/${snapshot.totalBytes}');
         },
         onError: (Object e) {
           print('Error during upload: $e');
@@ -106,10 +114,19 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
     }
   }
 
-  Future<void> addUserToFirestore(String name, String email, String phoneNumber,
-      String photographerId, String gover, String address, String date,
-      String gender, String imageUrl ,String price) async {
-    Profile profile = Profile(name: name,
+  Future<void> addUserToFirestore(
+      String name,
+      String email,
+      String phoneNumber,
+      String photographerId,
+      String gover,
+      String address,
+      String date,
+      String gender,
+      String imageUrl,
+      String price) async {
+    Profile profile = Profile(
+        name: name,
         email: email,
         phoneNumber: phoneNumber,
         profileId: photographerId,
@@ -119,16 +136,14 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
         profilePic: imageUrl,
         address: address,
         authorization: "photographer",
-      price: price
-    );
+        price: price);
     Map<String, dynamic> profileMap = profile.toMap();
 
     try {
-      await FirebaseFirestore.instance.collection('photographers').doc(
-          photographerId).set(
-          profileMap
-
-      );
+      await FirebaseFirestore.instance
+          .collection('photographers')
+          .doc(photographerId)
+          .set(profileMap);
       print('User added to Firestore successfully.');
     } catch (e) {
       print('Error adding user to Firestore: $e');
@@ -144,7 +159,8 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
       if (_imageUrl.isNotEmpty) {
         try {
           // Create user in Firebase Authentication
-          User? user = await context.read<AuthenticationCubit>()
+          User? user = await context
+              .read<AuthenticationCubit>()
               .signUpWithEmailAndPassword(widget.email, widget.password);
 
           if (user != null) {
@@ -161,12 +177,9 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                 dateController.text,
                 gender,
                 _imageUrl,
-                price
-
-            );
+                price);
 
             // Navigate to the home page after successful signup
-
           }
         } catch (e) {
           print('Error during signup: $e');
@@ -202,17 +215,17 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
             backgroundColor: Colors.grey,
             child: _image != null
                 ? ClipOval(
-              child: Image.file(
-                _image!,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            )
+                    child: Image.file(
+                      _image!,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  )
                 : const Icon(
-              Icons.person,
-              size: 50,
-            ),
+                    Icons.person,
+                    size: 50,
+                  ),
           ),
           Positioned(
             bottom: 0,
@@ -247,10 +260,13 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.all(16.0),
-                      child: Text("SignUp", style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),),
+                      child: Text(
+                        "SignUp",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,33 +274,28 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                         buildAvatar(),
                         const Padding(
                           padding: EdgeInsets.fromLTRB(8.0, 4, 8, 8),
-                          child: Text("Governorate", style: Styles
-                              .kTextStyle18),
+                          child:
+                              Text("Governorate", style: Styles.kTextStyle18),
                         ),
-                        DropDownButtonAuth(list: const [
-                          "Giza",
-                          "Cairo",
-                          "Alexandria"
-                        ],
-
+                        DropDownButtonAuth(
+                          list: const ["Giza", "Cairo", "Alexandria"],
                           onChanged: (value) {
                             governement = value;
                           },
                           icon: const Icon(Icons.location_on),
                         ),
-                        const SizedBox(height: 8,),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Your address", style: Styles
-                              .kTextStyle18),
+                          child:
+                              Text("Your address", style: Styles.kTextStyle18),
                         ),
-                        CustomTextFeild(
-                          hint: "address"
-                          ,
-                          secure: false
-                          ,
-                          icon: const Icon(Icons.location_city)
-                          ,
+                        CustomTextField(
+                          hint: "address",
+                          secure: false,
+                          icon: const Icon(Icons.location_city),
                           type: TextInputType.multiline,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -295,7 +306,9 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                             }
                           },
                         ),
-                        const SizedBox(height: 8,),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("BirthDate", style: Styles.kTextStyle18),
@@ -315,8 +328,7 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                                   selectedDate = pickedDate;
                                   // You can format the date as needed
                                   dateController.text =
-                                  "${pickedDate.month}/${pickedDate
-                                      .day}/${pickedDate.year}";
+                                      "${pickedDate.month}/${pickedDate.day}/${pickedDate.year}";
                                 });
                               }
                             },
@@ -331,34 +343,35 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                                     child: TextFormField(
                                       decoration: Constant.paymentDecoration
                                           .copyWith(
-                                          fillColor: Colors.transparent),
+                                              fillColor: Colors.transparent),
                                       controller: dateController,
                                       enabled: false,
                                     ),
                                   ),
                                 ],
                               ),
-                            )
+                            )),
+                        const SizedBox(
+                          height: 8,
                         ),
-                        const SizedBox(height: 8,),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Gender", style: Styles.kTextStyle18),
                         ),
-                        DropDownButtonAuth(list: const ["Male", "Female"],
+                        DropDownButtonAuth(
+                          list: const ["Male", "Female"],
                           onChanged: (value) {
                             gender = value;
                           },
                           icon: const Icon(Icons.person_2),
                         ),
-                        const SizedBox(height: 16,),
-                        CustomTextFeild(
-                          hint: "Price"
-                          ,
-                          secure: false
-                          ,
-                          icon: const Icon(Icons.currency_pound_outlined)
-                          ,
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        CustomTextField(
+                          hint: "Price",
+                          secure: false,
+                          icon: const Icon(Icons.currency_pound_outlined),
                           type: TextInputType.multiline,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -371,11 +384,11 @@ class _SignUpPhotographerForm2State extends State<SignUpPhotographerForm2> {
                         ),
                       ],
                     ),
-
-
-                    CustomButton(status: "Sign Up", onPressed: () {
-                      navigate(context);
-                    }),
+                    CustomButton(
+                        status: "Sign Up",
+                        onPressed: () {
+                          navigate(context);
+                        }),
                   ],
                 ),
               ),
