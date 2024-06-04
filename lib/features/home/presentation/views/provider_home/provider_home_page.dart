@@ -24,27 +24,23 @@ class ProviderHomePage extends StatefulWidget {
 }
 
 class _ProviderHomePageState extends State<ProviderHomePage> {
-  List<String> _images = [];
-  List<String> _videos = [];
+  final List<String> _images = [];
+  final List<String> _videos = [];
   bool _uploading = false;
 
   void _selectImages() async {
     List<String> selectedImages = await ImagePickerService.pickImages();
-    if (selectedImages != null) {
-      setState(() {
-        _images.addAll(selectedImages);
-      });
+    setState(() {
+      _images.addAll(selectedImages);
+    });
     }
-  }
 
   void _selectVideos() async {
     List<String> selectedVideos = await VideoPickerService.pickVideos();
-    if (selectedVideos != null) {
-      setState(() {
-        _videos.addAll(selectedVideos);
-      });
+    setState(() {
+      _videos.addAll(selectedVideos);
+    });
     }
-  }
 
   Future<void> _upload() async {
     setState(() {
@@ -117,14 +113,17 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
                       child: Column(
                         children: [
                           ProviderDetails(profile: profile!),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomButton(status: "Select Images", onPressed: _selectImages),
-                                CustomButton(status: "Select Videos", onPressed: _selectVideos),
-                              ],
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomButton(status: "Select Images", onPressed: _selectImages),
+                                  CustomButton(status: "Select Videos", onPressed: _selectVideos),
+                                ],
+                              ),
                             ),
                           ),
                           CustomButton(

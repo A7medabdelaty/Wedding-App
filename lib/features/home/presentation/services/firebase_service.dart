@@ -7,7 +7,9 @@ import 'package:wedding/features/home/data/contact_message.dart';
 
 class FirebaseService {
   static Future<void> uploadImages(
-      List<String> imagePaths, Profile profile) async {
+    List<String> imagePaths,
+    Profile profile,
+  ) async {
     final storage = FirebaseStorage.instance;
     final firestore = FirebaseFirestore.instance;
 
@@ -19,14 +21,16 @@ class FirebaseService {
           .child('$imageName.jpg');
       final UploadTask uploadTask = ref.putFile(File(path));
 
-      await uploadTask.whenComplete(() async {
-        String url = await ref.getDownloadURL();
-        await firestore
-            .collection('photographers')
-            .doc(profile.profileId)
-            .collection("images")
-            .add({'url': url});
-      });
+      await uploadTask.whenComplete(
+        () async {
+          String url = await ref.getDownloadURL();
+          await firestore
+              .collection('photographers')
+              .doc(profile.profileId)
+              .collection("images")
+              .add({'url': url});
+        },
+      );
     }
   }
 
@@ -60,5 +64,4 @@ class FirebaseService {
           message.toMap(),
         );
   }
-
 }
