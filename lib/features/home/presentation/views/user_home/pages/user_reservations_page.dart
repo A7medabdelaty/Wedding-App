@@ -101,7 +101,7 @@ class _UserResrvationPageState extends State<UserResrvationPage> {
                   color: Colors.grey.withOpacity(0.2),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 2), // changes position of shadow
+                  offset: const Offset(0, 2), // changes position of shadow
                 ),
               ],
             ),
