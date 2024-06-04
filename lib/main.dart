@@ -9,14 +9,15 @@ import 'package:wedding/features/home/manager/DataFetchCubit.dart';
 import 'package:wedding/features/home/manager/PhotographersFetchCubit.dart';
 import 'package:wedding/features/home/manager/image_fetch_cubit.dart';
 
+import 'bloc_observer.dart';
 import 'firebase_options.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = MyBlocObserver();
   await FirebaseAppCheck.instance.activate();
   runApp(const WeddingApp());
 }
@@ -29,27 +30,28 @@ class WeddingApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-        create: (context)=>AuthenticationCubit(),
+          create: (context) => AuthenticationCubit(),
         ),
-        BlocProvider(create: (context)=>ImageVideoCubit()),
-        BlocProvider(create: (context)=>DataFetchingCubit(),
+        BlocProvider(
+          create: (context) => ImageVideoCubit(),
         ),
-        BlocProvider(create: (context)=>DataFetchingPhotographersCubit(),
+        BlocProvider(
+          create: (context) => DataFetchingCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DataFetchingPhotographersCubit(),
         )
       ],
       child: DecoratedBox(
-        decoration:  BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AssetsData.backgroundImage),
-            fit: BoxFit.cover,
-          )
-        ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(AssetsData.backgroundImage),
+          fit: BoxFit.cover,
+        )),
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
-          theme: ThemeData(
-            scaffoldBackgroundColor: Colors.transparent
-          ),
+          theme: ThemeData(scaffoldBackgroundColor: Colors.transparent),
         ),
       ),
     );
