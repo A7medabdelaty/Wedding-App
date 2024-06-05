@@ -3,6 +3,7 @@ import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
 class DisplayVideo extends StatefulWidget {
   const DisplayVideo({super.key, required this.url});
+
   final String url;
 
   @override
@@ -11,18 +12,21 @@ class DisplayVideo extends StatefulWidget {
 
 class _DisplayVideoState extends State<DisplayVideo> {
   late VlcPlayerController _vlcPlayerController;
+  bool isPlaying = false;
 
   @override
   void initState() {
     super.initState();
-
     _vlcPlayerController = VlcPlayerController.network(
       widget.url,
       autoPlay: true,
+      autoInitialize: true,
       options: VlcPlayerOptions(
-        advanced: VlcAdvancedOptions([
-          VlcAdvancedOptions.networkCaching(2000),
-        ]),
+        advanced: VlcAdvancedOptions(
+          [
+            VlcAdvancedOptions.networkCaching(2000),
+          ],
+        ),
       ),
     );
   }

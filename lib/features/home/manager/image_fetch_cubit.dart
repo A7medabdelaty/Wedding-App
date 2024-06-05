@@ -14,7 +14,6 @@ class ImageVideoCubit extends Cubit<List<String>> {
       final urls = images.docs.map((doc) {
         return '${doc.data()['url']}#${doc.id}';
       }).toList();
-      print('f');
       emit(urls);
     } catch (e) {
       // Handle error
@@ -47,10 +46,30 @@ class ImageVideoCubit extends Cubit<List<String>> {
           .collection("videos")
           .get();
       final urls =
-          videos.docs.map((doc) => doc.data()['url'] as String).toList();
+          videos.docs.map((doc) {
+            return '${doc.data()['url']}#${doc.id}';
+          }).toList();
       emit(urls);
     } catch (e) {
       // Handle error
+    }
+  }
+
+  Future<void> deleteVideo(String videoId, String userId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('photographers')
+          .doc(userId)
+          .collection('videos')
+          .doc(videoId)
+          .delete()
+          .then(
+            (value) {
+          fetchVideosUrls(userId);
+        },
+      );
+    } catch (e) {
+      print(e);
     }
   }
 }
