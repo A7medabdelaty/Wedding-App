@@ -27,7 +27,6 @@ class ImageVideoCubit extends Cubit<List<String>> {
           .doc(id)
           .collection("videos")
           .get();
-
       final urls = videos.docs.map((doc) => doc.data()['url'] as String).toList();
       emit(urls);
     } catch (e) {

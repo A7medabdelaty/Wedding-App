@@ -53,7 +53,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 return null;
               },
             ),
-            const SizedBox(),
+            const SizedBox(height: 10,),
             CustomTextField(
               controller: _phoneNumberController,
               hint: "PhoneNumber",
@@ -65,7 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 return null;
               },
             ),
-            const SizedBox(),
+            const SizedBox(height: 10,),
             CustomTextField(
               controller: _address,
               hint: "Address",
@@ -77,7 +77,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 return null;
               },
             ),
-            const SizedBox(),
+            const SizedBox(height: 10,),
             CustomTextField(
               controller: _price,
               hint: "price",

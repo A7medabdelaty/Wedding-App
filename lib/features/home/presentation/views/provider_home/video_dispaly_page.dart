@@ -1,6 +1,5 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
 class DisplayVideo extends StatefulWidget {
   const DisplayVideo({super.key, required this.url});
@@ -11,33 +10,19 @@ class DisplayVideo extends StatefulWidget {
 }
 
 class _DisplayVideoState extends State<DisplayVideo> {
-  late VideoPlayerController _controller;
-  late ChewieController _chewieController;
+  late VlcPlayerController _vlcPlayerController;
 
   @override
   void initState() {
     super.initState();
 
-    // Create a Uri object from the URL string
-    Uri videoUri = Uri.parse(widget.url);
-
-    // Initialize VideoPlayerController with the Uri object
-    _controller = VideoPlayerController.network(videoUri.toString())
-      ..initialize().then((_) {
-        setState(() {});
-      });
-
-    _chewieController = ChewieController(
-      videoPlayerController: _controller,
-      aspectRatio: 16 / 9,
+    _vlcPlayerController = VlcPlayerController.network(
+      widget.url,
       autoPlay: true,
-      looping: true,
-      showControls: true,
-      materialProgressColors: ChewieProgressColors(
-        playedColor: Colors.red,
-        handleColor: Colors.red,
-        backgroundColor: Colors.grey,
-        bufferedColor: Colors.grey,
+      options: VlcPlayerOptions(
+        advanced: VlcAdvancedOptions([
+          VlcAdvancedOptions.networkCaching(2000),
+        ]),
       ),
     );
   }
@@ -49,47 +34,21 @@ class _DisplayVideoState extends State<DisplayVideo> {
         title: const Text("Video Display"),
         backgroundColor: Colors.orangeAccent,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (_controller.value.isPlaying) {
-                    _controller.pause();
-                  } else {
-                    _controller.play();
-                  }
-                },
-                child: SizedBox(
-                  child: AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white,
-                      ),
-                      child: Chewie(
-                        controller: _chewieController,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
+      body: Center(
+        child: VlcPlayer(
+          controller: _vlcPlayerController,
+          aspectRatio: 16 / 9,
+          placeholder: Container(
+            color: Colors.black,
           ),
         ),
       ),
     );
   }
 
-
   @override
   void dispose() {
-    _controller.dispose();
-    _chewieController.dispose();
+    _vlcPlayerController.dispose();
     super.dispose();
   }
 }
