@@ -19,6 +19,7 @@ void main() async {
   );
   Bloc.observer = MyBlocObserver();
   await FirebaseAppCheck.instance.activate();
+  FirebaseAppCheck.instance.activate(androidProvider: AndroidProvider.playIntegrity);
   runApp(const WeddingApp());
 }
 
