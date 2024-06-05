@@ -17,7 +17,7 @@ import '../user_home/widgets/images_list_view.dart';
 import '../user_home/widgets/provider_details.dart';
 
 class ProviderHomePage extends StatefulWidget {
-  const ProviderHomePage({Key? key}) : super(key: key);
+  const ProviderHomePage({super.key});
 
   @override
   State<ProviderHomePage> createState() => _ProviderHomePageState();
@@ -33,14 +33,14 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
     setState(() {
       _images.addAll(selectedImages);
     });
-    }
+  }
 
   void _selectVideos() async {
     List<String> selectedVideos = await VideoPickerService.pickVideos();
     setState(() {
       _videos.addAll(selectedVideos);
     });
-    }
+  }
 
   Future<void> _upload() async {
     setState(() {
@@ -54,7 +54,6 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
     if (_videos.isNotEmpty) {
       await FirebaseService.uploadVideos(_videos, profile!);
     }
-
     setState(() {
       _images.clear();
       _videos.clear();
@@ -75,21 +74,31 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                DataFetchingCubit cubit = BlocProvider.of<DataFetchingCubit>(context);
-                return EditProfilePage(profile: profile!, cubit: cubit,);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                DataFetchingCubit cubit =
+                    BlocProvider.of<DataFetchingCubit>(context);
+                return EditProfilePage(
+                  profile: profile!,
+                  cubit: cubit,
+                );
               }));
             },
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return PhotographerReservationPage(profile: profile!,);
-              }));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PhotographerReservationPage(
+                      profile: profile!,
+                    );
+                  },
+                ),
+              );
             },
             icon: const Icon(Icons.card_travel),
           ),
-
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
@@ -119,17 +128,33 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CustomButton(status: "Select Images", onPressed: _selectImages),
-                                  CustomButton(status: "Select Videos", onPressed: _selectVideos),
+                                  CustomButton(
+                                      status: "Select Images",
+                                      onPressed: _selectImages),
+                                  CustomButton(
+                                      status: "Select Videos",
+                                      onPressed: _selectVideos),
                                 ],
                               ),
                             ),
                           ),
                           CustomButton(
                             status: _uploading ? 'Uploading...' : 'Upload',
-                            onPressed: _upload,
+                            onPressed: () {
+                              ImageVideoCubit cubit = BlocProvider.of(context);
+                              _upload();
+                              cubit
+                                  .fetchImageURLs(profile!.profileId.toString())
+                                  .then(
+                                (value) {
+                                  print('done');
+                                  setState(() {});
+                                },
+                              );
+                            },
                           ),
                           if (_uploading) const LinearProgressIndicator(),
                           const Expanded(child: SizedBox(height: 30)),
@@ -139,13 +164,16 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "Images",
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
                           BlocProvider(
-                            create: (context) => ImageVideoCubit()..fetchImageURLs(profile!.profileId!),
-                            child: ImageListView(profileId: profile!.profileId!),
+                            create: (context) => ImageVideoCubit()
+                              ..fetchImageURLs(profile!.profileId!),
+                            child:
+                                ImageListView(profileId: profile!.profileId!),
                           ),
                           const SizedBox(height: 20),
                           const Padding(
@@ -154,14 +182,17 @@ class _ProviderHomePageState extends State<ProviderHomePage> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "Videos",
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
                           BlocProvider(
-                            create: (context) => ImageVideoCubit()..fetchVideosUrls(profile!.profileId!),
-                            child:VideoListView(profileId: profile!.profileId!,),
-
+                            create: (context) => ImageVideoCubit()
+                              ..fetchVideosUrls(profile!.profileId!),
+                            child: VideoListView(
+                              profileId: profile!.profileId!,
+                            ),
                           ),
                           const SizedBox(height: 40),
                         ],

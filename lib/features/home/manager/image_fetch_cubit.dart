@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class ImageVideoCubit extends Cubit<List<String>> {
   ImageVideoCubit() : super([]);
 
@@ -12,11 +11,31 @@ class ImageVideoCubit extends Cubit<List<String>> {
           .doc(id)
           .collection("images")
           .get();
-
-      final urls = images.docs.map((doc) => doc.data()['url'] as String).toList();
+      final urls = images.docs.map((doc) {
+        return '${doc.data()['url']}#${doc.id}';
+      }).toList();
+      print('f');
       emit(urls);
     } catch (e) {
       // Handle error
+    }
+  }
+
+  Future<void> deleteImage(String imageId, String userId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('photographers')
+          .doc(userId)
+          .collection('images')
+          .doc(imageId)
+          .delete()
+          .then(
+        (value) {
+          fetchImageURLs(userId);
+        },
+      );
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -27,7 +46,8 @@ class ImageVideoCubit extends Cubit<List<String>> {
           .doc(id)
           .collection("videos")
           .get();
-      final urls = videos.docs.map((doc) => doc.data()['url'] as String).toList();
+      final urls =
+          videos.docs.map((doc) => doc.data()['url'] as String).toList();
       emit(urls);
     } catch (e) {
       // Handle error

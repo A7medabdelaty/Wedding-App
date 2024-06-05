@@ -4,7 +4,7 @@ import 'package:wedding/features/home/manager/image_fetch_cubit.dart';
 
 import 'custom_image.dart';
 class ImageListView extends StatelessWidget {
-  const ImageListView({Key? key, required this.profileId}) : super(key: key);
+  const ImageListView({super.key, required this.profileId});
 
   final String profileId;
 
@@ -14,13 +14,14 @@ class ImageListView extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .3,
       child: BlocBuilder<ImageVideoCubit, List<String>>(
         builder: (context, state) {
+          ImageVideoCubit cubit = BlocProvider.of<ImageVideoCubit>(context);
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: state.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: CustomImagesWedding(url: state[index]),
+                child: CustomImagesWedding(url: state[index],cubit : cubit,userId:profileId),
               );
             },
           );
